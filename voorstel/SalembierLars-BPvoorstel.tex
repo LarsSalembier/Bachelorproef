@@ -8,6 +8,9 @@
 % Let op: kan enkel na toestemming van de bachelorproefcoördinator!
 \documentclass{hogent-article}
 
+\usepackage{lipsum} % Voor vultekst
+\usepackage{float}
+
 % Invoegen bibliografiebestand
 \addbibresource{voorstel.bib}
 
@@ -20,14 +23,14 @@
 % \course{Bachelor thesis}
 % \assignmenttype{Research proposal}
 
-\academicyear{2022-2023} % TODO: pas het academiejaar aan
+\academicyear{2024-2025} % TODO: pas het academiejaar aan
 
 % TODO: Werktitel
-\title{Vul hier de voorgestelde titel van je onderzoek in}
+\title{Een blauwdruk voor toekomstgerichte API's: ontwikkeling van best practices voor RESTful API design}
 
 % TODO: Studentnaam en emailadres invullen
-\author{Ernst Aarden}
-\email{ernst.aarden@student.hogent.be}
+\author{Lars Salembier}
+\email{lars.salembier@student.hogent.be}
 
 % TODO: Medestudent
 % Gaat het om een bachelorproef in samenwerking met een student in een andere
@@ -36,7 +39,7 @@
 % \email{yasmine.alaoui@student.hogent.be}
 
 % TODO: Geef de co-promotor op
-\supervisor[Co-promotor]{S. Beekman (Synalco, \href{mailto:sigrid.beekman@synalco.be}{sigrid.beekman@synalco.be})}
+\supervisor[Co-promotor]{Nog te bepalen (BrightAnalytics, \href{mailto:nog.tebepalen@brightanalytics.eu}{nogtebepalen@brightanalytics.eu})}
 
 % Binnen welke specialisatierichting uit 3TI situeert dit onderzoek zich?
 % Kies uit deze lijst:
@@ -50,12 +53,20 @@
 %   zelf
 %
 \specialisation{Mobile \& Enterprise development}
-\keywords{Scheme, World Wide Web, $\lambda$-calculus}
+\keywords{REST, RESTful API, API-design, HATEOAS, OpenAPI, Laravel, PHP, software development, best practices, API-development, webapplicaties}
 
 \begin{document}
 
 \begin{abstract}
-  Hier schrijf je de samenvatting van je voorstel, als een doorlopende tekst van één paragraaf. Let op: dit is geen inleiding, maar een samenvattende tekst van heel je voorstel met inleiding (voorstelling, kaderen thema), probleemstelling en centrale onderzoeksvraag, onderzoeksdoelstelling (wat zie je als het concrete resultaat van je bachelorproef?), voorgestelde methodologie, verwachte resultaten en meerwaarde van dit onderzoek (wat heeft de doelgroep aan het resultaat?).
+  In het huidige digitale landschap, waar applicaties voortdurend met elkaar communiceren en data uitwisselen, is de rol van Application Programming Interfaces (API's) cruciaal. Een goed ontworpen en gedocumenteerde API is essentieel voor efficiënte integraties, soepele datastromen en schaalbare software-architectuur. Dit is met name relevant voor BrightAnalytics, een bedrijf dat een geavanceerd data-visualisatieplatform aanbiedt voor financiële rapportering en business intelligence.
+
+  \bigskip
+
+  Deze bachelorproef onderzoekt hoe de principes van RESTful API design, inclusief HATEOAS en OpenAPI specificatie, vertaald kunnen worden naar concrete richtlijnen en best practices. Deze best practices worden gaandeweg geïmplementeerd in de backend API van de BrightEats applicatie (een applicatie in ontwikkeling bij BrightAnalytics), met als doel een blauwdruk te creëren voor de ontwikkeling van toekomstgerichte API's binnen het bedrijf.
+
+  \bigskip
+
+  Door middel van literatuuronderzoek, analyse van de huidige API-ontwikkelingspraktijken bij BrightAnalytics, en de praktische implementatie van de best practices in de BrightEats API, zal deze bachelorproef een set concrete aanbevelingen formuleren die BrightAnalytics in staat stellen om de kwaliteit, consistentie en efficiëntie van hun API-ontwikkeling te optimaliseren.
 \end{abstract}
 
 \tableofcontents
