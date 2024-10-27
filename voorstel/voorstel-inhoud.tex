@@ -6,48 +6,52 @@ De explosieve groei van data en de toenemende vraag naar naadloze integraties tu
 
 \bigskip
 
-Tijdens mijn stage bij BrightAnalytics ontwikkel ik "BrightEats", een applicatie waarmee werknemers hun lunch kunnen bestellen. Deze applicatie is afhankelijk van een robuuste en goed ontworpen backend API. De ontwikkeling van deze API biedt een uitgelezen kans om de principes van RESTful API design te implementeren en te evalueren binnen de specifieke context van BrightAnalytics.
+Tijdens mijn stage bij BrightAnalytics ontwikkel ik "BrightEats", een applicatie waarmee werknemers hun lunch kunnen bestellen. Deze applicatie is afhankelijk van een backend API, geschreven in Laravel, net zoals alle andere applicaties bij BrightAnalytics. De ontwikkeling van deze API biedt een uitgelezen kans om de principes van RESTful API design te implementeren en om te evalueren welke voor- en nadelen de meer geavanceerde principes hiervan (met name OpenAPI en Hypermedia As The Engine Of Application State (HATEOAS) ) met zich meebrengen.
 
 \bigskip
 
-Veel bedrijven ondervinden echter uitdagingen bij het waarborgen van consistente, kwalitatief hoogwaardige API's. Zonder duidelijke richtlijnen en gestandaardiseerde processen kunnen inconsistenties in API-ontwerp ontstaan, wat kan leiden tot suboptimale performance, integratieproblemen en problemen bij het onderhoud van de codebase. Om deze uitdagingen het hoofd te bieden, is het essentieel om best practices te definiëren en te implementeren die de kwaliteit, consistentie en efficiëntie van API-ontwikkeling kunnen verbeteren.
+Het principe van RESTful API design werd in 2000 geïntroduceerd door Roy Fielding in zijn proefschrift \autocite{Fielding2000}. REST (Representational State Transfer) is ondertussen wijdverspreid en wordt goed ondersteund wanneer we een API willen bouwen met Laravel. Echter zijn de meer geavanceerde onderdelen van REST, met name HATEOAS (Hypermedia As The Engine Of Application State) en OpenAPI, minder bekend en worden ze minder vaak toegepast in de praktijk. Deze principes kunnen echter een grote impact hebben op de kwaliteit, consistentie en onderhoudbaarheid van een API.
 
 \bigskip
 
-Deze bachelorproef beoogt een antwoord te formuleren op de volgende onderzoeksvraag:
+Met deze bachelorproef proberen we een antwoord te formuleren op de volgende onderzoeksvraag:
 
 \begin{center}
-\textbf{Welke concrete best practices, gebaseerd op REST, HATEOAS en OpenAPI, kunnen gedefinieerd worden om de kwaliteit, consistentie en onderhoudbaarheid te verhogen van API's?}
+\textbf{Welke concrete voordelen biedt de implementatie van RESTful API design, en in het bijzonder HATEOAS en OpenAPI, voor de kwaliteit, consistentie en onderhoudbaarheid van een Laravel-API en een bijbehorende frontend applicatie?}
 \end{center}
 
 \bigskip
 
-Deze vraag zal beantwoord worden aan de hand van de volgende onderzoeksdoelstellingen:
+We moeten hiervoor volgende deelvragen beantwoorden:
+
+\begin{itemize}
+  \item Wat zijn de principes van RESTful API design en hoe dragen deze bij aan betere API's?
+  \item Wat is HATEOAS en hoe kan dit principe worden toegepast in een Laravel-API?
+  \item Wat is OpenAPI en hoe kan dit worden toegepast in de documentatie van een Laravel-API?
+  \item Welke concrete voordelen biedt de implementatie van deze principes voor de kwaliteit, consistentie en onderhoudbaarheid van de BrightEats API?
+  \item Hoeveel aanpassingen zijn er nodig in de frontend applicatie om te kunnen werken met een HATEOAS API? Draagt dit bij aan de onderhoudbaarheid van deze applicatie?
+\end{itemize}
+
+Deze vragen zullen beantwoord worden aan de hand van de volgende onderzoeksdoelstellingen:
+
+\bigskip
 
 \begin{enumerate}
-\item \textbf{Inzicht verwerven in RESTful API design:} Een diepgaande analyse van de principes van RESTful API design, HATEOAS en OpenAPI specificatie, met als doel deze te vertalen naar concrete richtlijnen en best practices die toepasbaar zijn binnen de technologische context van BrightAnalytics.
-\item \textbf{Ontwikkeling showcase API:} De backend API van de BrightEats applicatie zal ontwikkeld worden conform de gedefinieerde best practices, als showcase en proof-of-concept voor toekomstige API-ontwikkeling binnen het bedrijf.
-\item \textbf{Formuleren van aanbevelingen:} Op basis van de bevindingen van de implementatie van de best practices in de BrightEats API, zullen concrete aanbevelingen geformuleerd worden voor het gebruik van deze aanpak in andere API's.
+\item \textbf{Inzicht verwerven in RESTful API design:} Een diepgaande analyse van de principes van RESTful API design, HATEOAS en OpenAPI specificatie, om deze zo goed mogelijk te kunnen toepassen en evalueren. We gaan ook na hoe we dit kunnen implementeren in een Laravel-API.
+\item \textbf{Ontwikkeling API en bijbehorende front-end:} Het ontwikkelen en refactoren van de BrightEats API naar deze standaarden om zo de voor- en nadelen te kunnen evalueren. Hierbij gaan we ook de impact op de frontend applicatie evalueren.
+\item \textbf{Formuleren van aanbevelingen:} Op basis van de bevindingen tijdens de implementatie nagaan welke principes van RESTful API design, HATEOAS en OpenAPI nuttig zijn voor BrightAnalytics en hoe deze best kunnen worden toegepast in de praktijk.
 \end{enumerate}
 
 \bigskip
 
-Deze bachelorproef is relevant voor een breed scala aan bedrijven die streven naar het optimaliseren van hun API-ontwikkelingsproces. Door de principes van RESTful API design te omarmen en te vertalen naar concrete richtlijnen, kan BrightAnalytics de ontwikkeling van hoogwaardige, schaalbare en toekomstbestendige API's garanderen. De BrightEats API zal zo dienen als een concrete blauwdruk voor de ontwikkeling van toekomstgerichte API's binnen het bedrijf.
+Deze bachelorproef is relevant voor BrightAnalytics, omdat we kunnen nagaan of het implementeren van HATEOAS en OpenAPI in API's effectief een meerwaarde biedt. Ook is het interessant om na te gaan welke kosten en moeite er gepaard gaan met het implementeren van deze principes en of deze opwegen tegen de voordelen. Hoe compatibel zijn deze principes met de tech stack (Laravel, Vue.js) van BrightAnalytics en welke best practices kunnen worden geformuleerd voor de implementatie hiervan?
 
 \section{Literatuurstudie}%
 \label{sec:literatuurstudie}
 
-We leven in een wereld die steeds digitaler wordt. Bedrijven gebruiken software voor allerlei taken, van boekhouding tot klantbeheer en marketing. De hoeveelheid data die deze software genereert, neemt exponentieel toe \autocite{Phiri2022}. Experts schatten dat er in 2025 wereldwijd meer dan 200 zettabytes aan data zal worden gegenereerd, een duizelingwekkende hoeveelheid informatie \autocite{Morgan2024}. Die data kan heel waardevol zijn als ze op de juiste manier wordt gebruikt om strategische beslissingen te nemen, processen te optimaliseren en nieuwe producten en diensten te ontwikkelen. Maar vaak is het een hele uitdaging om die data te ontsluiten en bruikbaar te maken. Softwareoplossingen werken vaak los van elkaar, waardoor het delen van data en het automatiseren van processen complex en tijdrovend is.
-
-\bigskip
-
-API's, of Application Programming Interfaces, bieden een oplossing voor dit probleem. Een API fungeert als een soort digitale brug tussen verschillende softwaretoepassingen, waardoor ze op een veilige en gestandaardiseerde manier data kunnen uitwisselen en met elkaar kunnen communiceren. Voor bedrijven die data-gedreven inzichten willen ontsluiten en efficiënte integraties tussen systemen willen realiseren, zijn API's onmisbaar. Zo'n tool is pas echt krachtig wanneer hij vlot kan samenwerken met andere bedrijfssystemen, zoals boekhoudpakketten, CRM-systemen of rapportagetools.
-
-\bigskip
-
 REST (Representational State Transfer) is een veelgebruikte architectuur om API's te ontwerpen en bouwen \autocite{Eddouibi2017}. Die populariteit heeft REST te danken aan zijn eenvoud, schaalbaarheid en compatibiliteit met de standaarden van het internet. Dankzij REST kunnen ontwikkelaars op een flexibele en efficiënte manier API's bouwen die vlot kunnen omgaan met de almaar toenemende hoeveelheid data die bedrijven vandaag genereren. In de volgende secties zullen we dieper ingaan op de principes en voordelen van RESTful API's.
 
-\section{De principes van RESTful API's}
+\subsection{De principes van RESTful API's}
 
 RESTful API's zijn gebaseerd op een aantal belangrijke principes die bijdragen aan hun eenvoud, schaalbaarheid en gebruiksvriendelijkheid. Eén van die principes is de client-server architectuur \autocite{Fielding2000}. Een RESTful API maakt een duidelijke scheiding tussen de client, die een aanvraag doet (bijvoorbeeld een rapport opvragen), en de server, die de aanvraag verwerkt en een antwoord terugstuurt. Deze scheiding zorgt ervoor dat de client en server onafhankelijk van elkaar kunnen evolueren, wat de flexibiliteit en onderhoudbaarheid ten goede komt.
 
@@ -61,7 +65,7 @@ Cacheability is een derde belangrijk principe van REST  \autocite{Fielding2000}.
 
 \bigskip
 
-Een uniform interface is een ander cruciaal aspect van RESTful API's. Dit betekent dat alle resources (bijvoorbeeld financiële rapporten, klanten, transacties) benaderd worden via eenzelfde set van operaties, gedefinieerd door de HTTP-methodes (GET, POST, PUT, DELETE) \autocite{Fielding2000}. Deze uniformiteit maakt de API voorspelbaar en gemakkelijk te gebruiken, omdat ontwikkelaars niet hoeven te leren hoe ze met elk type resource op een andere manier moeten omgaan.
+Een uniform interface is een ander cruciaal aspect van RESTful API's. Dit betekent dat alle resources (bijvoorbeeld financiële rapporten, klanten, transacties) benaderd worden via eenzelfde set van operaties, gedefinieerd door de HTTP-methodes (GET, POST, PUT, PATCH, DELETE) \autocite{Fielding2000}. Deze uniformiteit maakt de API voorspelbaar en gemakkelijk te gebruiken, omdat ontwikkelaars niet hoeven te leren hoe ze met elk type resource op een andere manier moeten omgaan.
 
 \bigskip
 
@@ -71,13 +75,13 @@ Tot slot is het principe van een gelaagde systeemarchitectuur ook van toepassing
 
 Door deze principes te volgen, dragen RESTful API's bij aan het creëren van software die flexibeler, schaalbaarder, betrouwbaarder en gebruiksvriendelijker is. 
 
-\section{HATEOAS: flexibiliteit en dynamische navigatie}
+\subsection{HATEOAS: flexibiliteit en dynamische navigatie}
 
 Eén van de krachtigste eigenschappen van RESTful API's is hun flexibiliteit. Een goed ontworpen RESTful API kan gemakkelijk evolueren en uitbreiden zonder dat bestaande toepassingen die er gebruik van maken, moeten worden aangepast. HATEOAS (Hypermedia As The Engine Of Application State) is een belangrijk concept binnen REST dat deze flexibiliteit nog verder vergroot.
 
 \bigskip
 
-Bij de HATEOAS-aanpak bevatten de antwoorden van de API niet alleen de gevraagde data, maar ook links naar gerelateerde resources of acties die de gebruiker kan uitvoeren \autocite{Aydemir_2022}. Stel je bijvoorbeeld voor dat een gebruiker via een API een rapport opvraagt over maandelijkse verkoopcijfers. In een traditionele API zou het antwoord enkel de data van het rapport bevatten. Maar met HATEOAS zou het antwoord ook links kunnen bevatten om:
+Bij de HATEOAS-aanpak bevatten de antwoorden van de API niet alleen de gevraagde data, maar ook links naar gerelateerde resources en acties die de gebruiker kan uitvoeren \autocite{Aydemir_2022}. Stel je bijvoorbeeld voor dat een gebruiker via een API een rapport opvraagt over maandelijkse verkoopcijfers. In een traditionele API zou het antwoord enkel de data van het rapport bevatten. Maar met HATEOAS zou het antwoord ook links kunnen bevatten om:
 
 \begin{itemize}
   \item De data van het rapport te downloaden in een ander formaat (bijvoorbeeld CSV, Excel);
@@ -88,15 +92,15 @@ Bij de HATEOAS-aanpak bevatten de antwoorden van de API niet alleen de gevraagde
 
 \bigskip
 
-Door deze links te volgen, kan een client op een dynamische manier door de API navigeren en verschillende acties uitvoeren, zonder dat de ontwikkelaar van de client op voorhand alle mogelijke URI's van de API moet kennen. Dit maakt de API veel flexibeler en minder foutgevoelig voor veranderingen. Als de structuur van de API in de toekomst verandert, hoeven enkel de links in de responses te worden aangepast, zonder dat de client-applicaties zelf moeten worden bijgewerkt.
+Door deze links te volgen, kan een client op een dynamische manier door de API navigeren en verschillende acties uitvoeren, zonder dat de ontwikkelaar van de client op voorhand alle mogelijke URI's van de API moet kennen. Dit maakt de API flexibeler en minder foutgevoelig voor veranderingen. Als de structuur van de API in de toekomst verandert, hoeven enkel de links in de responses te worden aangepast, zonder dat de client-applicaties zelf moeten worden bijgewerkt.
 
 \bigskip
 
-HATEOAS wordt vaak beschouwd als een essentieel onderdeel van een "volwassen" RESTful API en draagt bij aan een losse koppeling tussen client en server, wat de onderhoudbaarheid en schaalbaarheid van de API ten goede komt.
+HATEOAS wordt beschouwd als een essentieel onderdeel van een "volwassen" RESTful API en draagt bij aan de loose coupling tussen client en server, wat de onderhoudbaarheid en schaalbaarheid van de API ten goede komt.
 
-\section{OpenAPI: Documentatie en standaardisatie}
+\subsection{OpenAPI: Documentatie en standaardisatie}
 
-Een goed gedocumenteerde API is essentieel voor ontwikkelaars die de API willen gebruiken. Zonder duidelijke documentatie is het moeilijk om te weten hoe je de API moet aanspreken, welke data je kunt opvragen en welke parameters je moet meegeven. OpenAPI (vroeger bekend als Swagger) biedt een oplossing voor dit probleem door een gestandaardiseerde manier te bieden om RESTful API's te beschrijven.
+Een goed gedocumenteerde API is essentieel voor ontwikkelaars die de API willen gebruiken. Zonder duidelijke documentatie is het moeilijk om te weten hoe je de API moet aanspreken, welke data je kunt opvragen en welke parameters je moet meegeven. OpenAPI (vroeger bekend als Swagger) biedt een oplossing voor dit probleem door een gestandaardiseerde manier te bieden om RESTful API's te documenteren.
 
 \bigskip
 
@@ -106,17 +110,13 @@ OpenAPI is een specificatie die beschrijft hoe je een RESTful API kunt documente
 
 Het gebruik van OpenAPI biedt tal van voordelen voor zowel API-ontwikkelaars als -gebruikers. Zo kan er op basis van een OpenAPI-document automatisch documentatie worden gegenereerd in een gebruiksvriendelijk formaat, bijvoorbeeld met behulp van tools zoals Swagger UI of Redoc \autocite{Swagger2021}. Dit bespaart ontwikkelaars heel wat tijd en moeite, en zorgt ervoor dat de documentatie altijd up-to-date is met de laatste versie van de API.
 
-\bigskip
-
-Daarnaast kunnen OpenAPI-documenten gebruikt worden om automatisch client- en servercode te genereren in verschillende programmeertalen \autocite{Swagger2021}. Dit versnelt het ontwikkelingsproces aanzienlijk, omdat ontwikkelaars niet langer handmatig code hoeven te schrijven om de API aan te spreken of te implementeren.
-
-\section{Best practices voor API design}
+\subsection{Best practices voor API design}
 
 Een API moet niet alleen functioneel zijn, maar ook gebruiksvriendelijk, flexibel en performant, zodat ontwikkelaars er vlot mee kunnen werken. Daarom is het belangrijk om te steunen op beproefde best practices bij het ontwerp en de implementatie van een API.
 
 \bigskip
 
-Eén van de belangrijkste aspecten is het gebruik van duidelijke en consistente naamgevingsconventies voor URI's (Uniform Resource Identifiers), die de verschillende resources van de API identificeren. Het is aangeraden om zelfstandige naamwoorden in het meervoud te gebruiken, bijvoorbeeld `/api/v1/reports` om alle rapporten op te halen, of `/api/v1/reports/123` om een specifiek rapport met ID 123 op te halen \autocite{Lange2024}. Door consistente naamgevingsconventies te hanteren, wordt de API voorspelbaarder en gemakkelijker te gebruiken.
+Eén van de belangrijkste aspecten is het gebruik van duidelijke en consistente naamgevingsconventies voor URI's (Uniform Resource Identifiers), die de verschillende resources van de API identificeren. Het is aangeraden om zelfstandige naamwoorden in het meervoud te gebruiken, bijvoorbeeld `/api/v1/orders` om alle bestellingen op te halen, of `/api/v1/orders/123` om een specifieke bestelling met ID 123 op te halen \autocite{Lange2024}. Door consistente naamgevingsconventies te hanteren, wordt de API voorspelbaarder en gemakkelijker te gebruiken.
 
 \bigskip
 
@@ -124,53 +124,29 @@ Het correct gebruiken van HTTP-methoden (GET, POST, PUT, DELETE) is essentieel v
 
 \bigskip
 
-De performantie van de API is ook van cruciaal belang. Gebruikers verwachten dat data snel en soepel wordt ingeladen, en lange laadtijden kunnen leiden tot frustratie en een slechte gebruikerservaring. Daarom is het belangrijk om bij het ontwerp van de API rekening te houden met factoren die de performantie kunnen beïnvloeden, zoals de grootte van de datasets, de complexiteit van de queries en de efficiëntie van de data-uitwisseling. Technieken zoals caching, paginering en compressie kunnen helpen om de performantie te verbeteren en de laadtijden te verkorten.
+De performance van de API is ook van cruciaal belang. Gebruikers verwachten dat data snel en soepel wordt ingeladen, en lange laadtijden kunnen leiden tot frustratie en een slechte gebruikerservaring. Daarom is het belangrijk om bij het ontwerp van de API rekening te houden met factoren die de performantie kunnen beïnvloeden, zoals de grootte van de datasets, de complexiteit van de queries en de efficiëntie van de data-uitwisseling. Technieken zoals caching, paginering en compressie kunnen helpen om de performantie te verbeteren en de laadtijden te verkorten.
 
 \bigskip
 
-Beveiliging is een andere cruciale factor. Het is essentieel om de API te beschermen tegen ongeautoriseerde toegang en misbruik door middel van robuuste authenticatie- en autorisatiemechanismen \autocite{Lange2024}. Oauth 2.0 is een veelgebruikte standaard voor authenticatie en autorisatie die kan worden geïntegreerd in RESTful API's.
+Tot slot is een duidelijke en uitgebreide documentatie onmisbaar. De documentatie moet niet alleen de technische details van de API beschrijven, maar ook voorbeelden en use cases bevatten die ontwikkelaars helpen om de API snel en efficiënt te integreren in hun eigen applicaties. Met behulp van OpenAPI is dit proces geautomatiseerd en gestandaardiseerd, wat de consistentie en duidelijkheid van de documentatie ten goede komt.
+
+\subsection{Conclusie}
+
+In een wereld gedreven door data zijn API's onmisbaar geworden om de kloof tussen verschillende softwareoplossingen te overbruggen en naadloze gegevensuitwisseling mogelijk te maken. REST, gebaseerd op een reeks krachtige principes zoals client-server architectuur, statelessness en een uniforme interface, heeft zich bewezen als een robuuste en flexibele oplossing voor het ontwerpen van API's.
 
 \bigskip
 
-Tot slot is een duidelijke en uitgebreide documentatie onmisbaar. De documentatie moet niet alleen de technische details van de API beschrijven, maar ook voorbeelden en use cases bevatten die ontwikkelaars helpen om de API snel en efficiënt te integreren in hun eigen applicaties.
-
-\section{Een gebruikersgerichte aanpak bij API-ontwikkeling}
-
-Bij API-ontwikkeling ligt de focus vaak sterk op technische aspecten, zoals het kiezen van de juiste architectuur, het implementeren van beveiligingsprotocollen en het optimaliseren van de performantie. Maar om echt succesvol te zijn, moet een API niet alleen technisch robuust zijn, maar ook voldoen aan de behoeften en verwachtingen van de gebruikers. Daarom is het belangrijk om een gebruikersgerichte aanpak te hanteren bij het ontwerpen en ontwikkelen van API'samengevoegd.
-
-\bigskip
-
-User-centered design is een ontwerpfilosofie die de eindgebruiker centraal stelt in elk stadium van het ontwerpproces. Bij API-ontwikkeling betekent dit dat de focus moet liggen op de behoeften van de ontwikkelaars die de API zullen gebruiken om applicaties te bouwen. Een API die intuïtief, consistent en gemakkelijk te gebruiken is, zal sneller geadopteerd worden en leiden tot een hogere tevredenheid bij de gebruikers.
-
-\bigskip
-
-Om een gebruiksvriendelijke API te ontwerpen, is het belangrijk om te begrijpen hoe de API zal worden gebruikt en welke taken de gebruikers ermee willen uitvoeren. Dit kan worden bereikt door middel van gebruikersonderzoek, zoals interviews, surveys en gebruikstesten. Door te observeren hoe ontwikkelaars de API gebruiken, kunnen ontwerpers ontdekken welke behoeften er zijn, en de API optimaliseren om aan die behoeften te voldoen.
-
-\bigskip
-
-Een ander belangrijk aspect van user-centered API design is documentatie. Een goed gedocumenteerde API is essentieel voor ontwikkelaars die de API willen begrijpen en gebruiken. De documentatie moet duidelijk, beknopt en toegankelijk zijn, en voorbeelden en use cases bevatten die laten zien hoe de API kan worden gebruikt om realistische problemen op te lossen.
-
-\section{Conclusie}
-
-In een wereld gedreven door data zijn API's onmisbaar geworden om de kloof tussen verschillende softwareoplossingen te overbruggen en naadloze gegevensuitwisseling mogelijk te maken. RESTful API's, gebaseerd op een reeks krachtige principes zoals client-server architectuur, statelessness en een uniforme interface, hebben zich bewezen als een robuuste en flexibele oplossing voor het ontsluiten van data en functionaliteit. 
-
-\bigskip
-
-Binnen de context van moderne softwareontwikkeling, en met name in domeinen zoals datavisualisatie, zijn API's van cruciaal belang om de integratie met andere systemen te vergemakkelijken en zo de waarde van data te maximaliseren. Het hanteren van best practices, zoals duidelijke URI-structuren, correct gebruik van HTTP-methoden en een doordachte beveiliging, is essentieel voor het creëren van API's die niet alleen functioneel zijn, maar ook gebruiksvriendelijk en veilig.
+Het hanteren van best practices, zoals duidelijke URI-structuren, correct gebruik van HTTP-methoden en een doordachte beveiliging, is essentieel voor het creëren van API's die niet alleen functioneel zijn, maar ook gebruiksvriendelijk en veilig.
 
 \bigskip
 
 HATEOAS voegt een extra laag van flexibiliteit toe aan RESTful API's door clients in staat te stellen dynamisch te navigeren en te interageren met resources via hyperlinks. OpenAPI biedt een gestandaardiseerde manier om API's te documenteren, wat de ontwikkeling en het gebruik ervan vergemakkelijkt.
 
-\bigskip
-
-Het succes van een API hangt echter niet alleen af van technische factoren. Een gebruikersgerichte aanpak bij het ontwerp en de ontwikkeling van API's is essentieel om ervoor te zorgen dat de API voldoet aan de behoeften van de ontwikkelaars die ermee zullen werken. Door te focussen op gebruiksvriendelijkheid, duidelijke documentatie en een grondig begrip van de gebruikersbehoeften, kunnen we API's creëren die niet alleen krachtig, maar ook intuïtief en makkelijk te gebruiken zijn.
-
 %---------- Methodologie ------------------------------------------------------
 \section{Methodologie}
 \label{sec:methodologie}
 
-Deze bachelorproef onderzoekt en verbetert de API-kwaliteit bij BrightAnalytics door de iteratieve ontwikkeling van de BrightEats API. Onderzoek en ontwikkeling gaan hand in hand, wat resulteert in een flexibele methodologie. De inzichten uit het onderzoek worden direct toegepast op de API, en de ervaringen tijdens de ontwikkeling sturen het onderzoek bij.
+Deze bachelorproef onderzoekt en verbetert de API-kwaliteit bij BrightAnalytics door de iteratieve ontwikkeling van de BrightEats API. Onderzoek en ontwikkeling gaan hand in hand. De inzichten uit het onderzoek worden direct toegepast op de API, en de ervaringen tijdens de ontwikkeling sturen het onderzoek bij.
 
 \bigskip
 Ik ga ervan uit dat ik elke week minstens \'e\'en dag kan werken aan de bachelorproef. De deadlines zijn echter flexibel, aangezien de API-ontwikkeling continu doorloopt en de planning kan be\"invloeden.
@@ -180,39 +156,27 @@ Ik ga ervan uit dat ik elke week minstens \'e\'en dag kan werken aan de bachelor
 \textbf{Deadline: 3 november 2024}
 
 \bigskip
-Deze fase is gericht op het verzamelen van kennis over kwalitatieve API-ontwikkeling en het defini\"eren van een eerste set best practices voor BrightEats.
-
-\subsubsection{Literatuurstudie REST \& HATEOAS}
-
-\textbf{Deadline: 27 oktober 2024}
+Deze fase is gericht op het verzamelen van kennis over kwalitatieve API-ontwikkeling en het defini\"eren van een eerste set best practices voor BrightEats. Ik bestudeer de principes van REST, HATEOAS en OpenAPI en hun belang voor API-kwaliteit en formuleer concrete aanbevelingen voor de BrightEats API.
 
 \bigskip
-Ik bestudeer de basisprincipes van REST en HATEOAS en hun belang voor API-kwaliteit:
 
+\textbf{We zoeken een antwoord op de volgende vragen:}
 \begin{itemize}
-  \item Wat zijn de principes van REST en HATEOAS?
+  \item Wat zijn de principes van REST?
   \item Hoe dragen deze bij aan betere API's?
   \item Welke best practices zijn er voor URI-structuur, HTTP-methoden, response codes en versiebeheer?
-\end{itemize}
-
-\subsubsection{Literatuurstudie OpenAPI \& Eerste best practices}
-
-\textbf{Deadline: 3 november 2024}
-
-\bigskip
-Ik verdiep mezelf in OpenAPI en definieer de eerste best practices voor BrightEats:
-
-\begin{itemize}
-  \item Hoe verbeteren OpenAPI specificaties de consistentie en duidelijkheid van API's?
-  \item Welke tools, zoals Swagger UI, ondersteunen OpenAPI?
-  \item Hoe vertaal ik de inzichten uit de literatuur naar concrete richtlijnen voor BrightEats?
+  \item Hoe houden we onze Laravel-API RESTful?
+  \item Wat zijn de principes en voordelen van HATEOAS?
+  \item Hoe kunnen we HATEOAS implementeren in een Laravel-API?
+  \item Hoe maken we optimaal gebruik van HATEOAS in de frontend van BrightEats?
+  \item Wat is OpenAPI en hoe kan dit worden toegepast in de documentatie van een Laravel-API?
 \end{itemize}
 
 \textbf{Deliverables:}
 
 \begin{itemize}
   \item Literatuurstudie over REST, HATEOAS en OpenAPI.
-  \item Document met eerste set best practices voor de BrightEats API.
+  \item Best practices voor de implementatie hiervan in de BrightEats API en frontend.
 \end{itemize}
 
 \subsection{Fase 2: Iteratieve ontwikkeling en verfijning BrightEats API}
@@ -220,7 +184,7 @@ Ik verdiep mezelf in OpenAPI en definieer de eerste best practices voor BrightEa
 \textbf{Deadline: 8 december 2024}
 
 \bigskip
-Gedurende deze fase ontwikkel ik de BrightEats API iteratief en verfijn ik de best practices.
+Gedurende deze fase ontwikkel ik de BrightEats API iteratief en verfijn ik de best practices. We kijken welke principes nuttig zijn in de praktijk en welke aanpassingen nodig zijn om deze te implementeren in de BrightEats API.
 
 \subsubsection{Ontwikkeling van de API (doorlopend)}
 
@@ -232,7 +196,7 @@ Elke week doorloop ik de volgende stappen:
   \item \textbf{Ontwerpen:} Ik ontwerp de nieuwe functionaliteiten met de best practices in gedachten.
   \item \textbf{Implementeren:} Ik programeer de nieuwe functionaliteiten in de API.
   \item \textbf{Testen:} Ik test de nieuwe functionaliteiten grondig.
-  \item \textbf{Evalueren:} Ik beoordeel de kwaliteit, structuur en gebruikte best practices, in samenspraak met een lead developer bij BrightAnalytics.
+  \item \textbf{Evalueren:} Ik beoordeel de kwaliteit, structuur en gebruikte best practices.
   \item \textbf{Best practices bijstellen:} Ik pas de richtlijnen aan op basis van de evaluatie en feedback.
 \end{enumerate}
 
@@ -242,7 +206,6 @@ Elke week doorloop ik de volgende stappen:
   \item Wekelijkse updates van de BrightEats API.
   \item Documentatie van de API met OpenAPI specificaties.
   \item Logboek met gemaakte keuzes en evaluaties.
-  \item Bijgewerkte best practices voor API-ontwikkeling.
 \end{itemize}
 
 \subsection{Fase 3: Synthese, aanbevelingen en afronding}
@@ -250,20 +213,14 @@ Elke week doorloop ik de volgende stappen:
 \textbf{Deadline: 15 december 2025}
 
 \bigskip
-In de laatste fase vat ik mijn bevindingen samen en formuleer ik concrete aanbevelingen.
+In de laatste fase vat ik mijn bevindingen samen en formuleer ik een antwoord op de onderzoeksvraag. Wat was de exacte kost van het implementeren van HATEOAS en OpenAPI in de BrightEats API? Welke voordelen en nadelen bracht dit met zich mee? Welke best practices kunnen we formuleren voor de ontwikkeling van API's bij BrightAnalytics?
 
 \subsubsection{Synthese \& Aanbevelingen}
 
 \textbf{Deadline: 15 januari 2025}
 
 \bigskip
-Ik vat de best practices samen en formuleer concrete aanbevelingen voor BrightAnalytics:
-
-\begin{itemize}
-  \item Wat heb ik geleerd tijdens de ontwikkeling van BrightEats?
-  \item Hoe kan ik de API-kwaliteit hoog houden en de DX (developer experience) verbeteren?
-  \item Wat zijn de voordelen van deze aanpak?
-\end{itemize}
+Ik schrijf de conclusie en aanbevelingen voor BrightAnalytics. Hierbij beantwoord ik de deelvragen en onderzoeksvraag en formuleer ik concrete best practices voor de ontwikkeling van RESTful API's bij BrightAnalytics.
 
 \subsubsection{Afronding bachelorproef}
 
@@ -293,8 +250,7 @@ Gebaseerd op de voordelen van REST, HATEOAS en OpenAPI die in de literatuurstudi
 
 \begin{itemize}
     \item \textbf{Verbeterde structuur en leesbaarheid:} De API zal een duidelijk gedefinieerde structuur hebben die consistent is met de RESTful principes, waardoor deze beter leesbaar wordt voor ontwikkelaars. Dit evalueer ik door de API te laten reviewen door andere developers. Ik verwacht positieve feedback te krijgen over de overzichtelijkheid en structuur.
-    \item \textbf{Verhoogde betrouwbaarheid:} Door het gebruik van HTTP-statuscodes en duidelijke foutmeldingen zal de API betrouwbaarder worden en zullen fouten sneller en efficiënter kunnen worden opgespoord en verholpen. Ik verwacht een duidelijke daling in het aantal bugs die tijdens de ontwikkeling van de BrightEats frontend optreden.
-    \item \textbf{Verbeterde veiligheid:} De API zal gebruik maken van robuuste authenticatie- en autorisatiemechanismen, waardoor deze beter beveiligd zal zijn tegen ongeautoriseerde toegang en misbruik. Ik verwacht dat de API geen kritieke kwetsbaarheden bevat.
+    \item \textbf{Verbeterde DX (Developer Experience):} De API zal gemakkelijker te gebruiken zijn voor ontwikkelaars, dankzij de consistente naamgevingsconventies, uniforme datamodellen en duidelijke documentatie. Ik verwacht dat ontwikkelaars die met de API werken, minder tijd zullen besteden aan het uitzoeken van de werking en meer tijd zullen kunnen besteden aan het ontwikkelen van nieuwe features.
 \end{itemize}
 
 \subsection{Consistentie}
@@ -313,9 +269,9 @@ Gebaseerd op de voordelen van REST, HATEOAS en OpenAPI die in de literatuurstudi
 
 \subsection{Conclusie}
 
-Deze bachelorproef zal concrete best practices definiëren die gebaseerd zijn op REST, HATEOAS en OpenAPI om de kwaliteit, consistentie en onderhoudbaarheid van API's te verhogen. Ik verwacht dat de implementatie van deze best practices zal leiden tot een verbeterde API-kwaliteit, wat zich zal uiten in een betere structuur, verhoogde betrouwbaarheid, verbeterde veiligheid, consistente naamgevingsconventies, uniforme datamodellen, betere documentatie en een eenvoudiger onderhoud en uitbreiding van de API.
+Deze bachelorproef zal nagaan of de voordelen van RESTful API design, HATEOAS en OpenAPI opwegen tegen de nadelen, en of deze aanpak in de praktijk haalbaar en nuttig is in de tech stack van BrightAnalytics. De resultaten van deze bachelorproef zijn relevant, aangezien we zo weten of met name HATEOAS wel degelijk een meerwaarde biedt voor de API's van BrightAnalytics. De best practices die geformuleerd worden, zullen nuttig zijn voor toekomstige API-ontwikkeling binnen BrightAnalytics.
 
-De BrightEats API zal dienen als een showcase voor deze best practices en als blauwdruk voor toekomstige API-ontwikkeling binnen BrightAnalytics. De resultaten van deze bachelorproef zullen relevant zijn voor een breed scala aan bedrijven die streven naar het optimaliseren van hun API-ontwikkelingsproces en het creëren van hoogwaardige, schaalbare en toekomstbestendige API's.
+De BrightEats API zal dienen als een showcase voor deze best practices en als blauwdruk voor toekomstige API-ontwikkeling. Indien het implementeren van deze principes echter te complex of tijdrovend blijkt te zijn, kan dit een signaal zijn dat de voordelen niet opwegen tegen de nadelen en dat er andere oplossingen moeten worden gezocht.
 
 \clearpage
 
