@@ -5,32 +5,39 @@
 \chapter{\IfLanguageName{dutch}{Inleiding}{Introduction}}%
 \label{ch:inleiding}
 
-De inleiding moet de lezer net genoeg informatie verschaffen om het onderwerp te begrijpen en in te zien waarom de onderzoeksvraag de moeite waard is om te onderzoeken. In de inleiding ga je literatuurverwijzingen beperken, zodat de tekst vlot leesbaar blijft. Je kan de inleiding verder onderverdelen in secties als dit de tekst verduidelijkt. Zaken die aan bod kunnen komen in de inleiding~\autocite{Pollefliet2011}:
+De explosieve groei van data en de toenemende vraag naar naadloze integraties tussen applicaties hebben de rol van Application Programming Interfaces (API's) centraal geplaatst in de hedendaagse softwareontwikkeling. Een goed ontworpen en gedocumenteerde API is niet langer een luxe, maar essentieel voor succes in het digitale landschap. Dit is met name relevant voor BrightAnalytics, een bedrijf dat een geavanceerd data-visualisatieplatform aanbiedt voor financiële rapportering en business intelligence. De kwaliteit, consistentie en efficiëntie van de API's die BrightAnalytics ontwikkelt, zijn van cruciaal belang voor de functionaliteit van hun producten, de integratie met andere systemen en het snel kunnen ontwikkelen van nieuwe features.
 
-\begin{itemize}
-  \item context, achtergrond
-  \item afbakenen van het onderwerp
-  \item verantwoording van het onderwerp, methodologie
-  \item probleemstelling
-  \item onderzoeksdoelstelling
-  \item onderzoeksvraag
-  \item \ldots
-\end{itemize}
+\bigskip
+
+Tijdens mijn stage bij BrightAnalytics ontwikkel ik "BrightEats", een applicatie waarmee werknemers hun lunch kunnen bestellen. Deze applicatie is afhankelijk van een backend API, geschreven in Laravel, net zoals alle andere applicaties bij BrightAnalytics. De ontwikkeling van deze API biedt een uitgelezen kans om de principes van RESTful API design te implementeren en om te evalueren welke voor- en nadelen de meer geavanceerde principes hiervan (met name OpenAPI en Hypermedia As The Engine Of Application State (HATEOAS)) met zich meebrengen. Het is belangrijk om te onderzoeken of de theoretische voordelen van deze principes zich vertalen in praktische winst binnen de specifieke context van BrightAnalytics, rekening houdend met de bestaande technologieën en de ontwikkelprocessen.
+
+\bigskip
+
+Het principe van RESTful API design werd in 2000 geïntroduceerd door Roy Fielding in zijn proefschrift \autocite{Fielding2000}. REST (Representational State Transfer) is ondertussen wijdverspreid en wordt goed ondersteund bij het bouwen van een API met Laravel. Echter, de meer geavanceerde onderdelen van REST, met name HATEOAS (Hypermedia As The Engine Of Application State) en OpenAPI, zijn minder bekend en worden minder vaak toegepast in de praktijk. Deze principes kunnen echter een grote impact hebben op de kwaliteit, consistentie en onderhoudbaarheid van een API. De vraag is of deze impact voldoende positief is om de extra inspanning van implementatie en onderhoud te rechtvaardigen, en of ze compatibel zijn met de bestaande frontend technologie, Vue.js.
 
 \section{\IfLanguageName{dutch}{Probleemstelling}{Problem Statement}}%
 \label{sec:probleemstelling}
 
-Uit je probleemstelling moet duidelijk zijn dat je onderzoek een meerwaarde heeft voor een concrete doelgroep. De doelgroep moet goed gedefinieerd en afgelijnd zijn. Doelgroepen als ``bedrijven,'' ``KMO's'', systeembeheerders, enz.~zijn nog te vaag. Als je een lijstje kan maken van de personen/organisaties die een meerwaarde zullen vinden in deze bachelorproef (dit is eigenlijk je steekproefkader), dan is dat een indicatie dat de doelgroep goed gedefinieerd is. Dit kan een enkel bedrijf zijn of zelfs één persoon (je co-promotor/opdrachtgever).
+De ontwikkeling en het onderhoud van kwalitatieve API's is een uitdaging voor veel bedrijven, waaronder BrightAnalytics. Inconsistente API-ontwerpen, gebrekkige documentatie en een suboptimale communicatie tussen frontend- en backend-teams kunnen leiden tot vertragingen in de ontwikkeling en dus verhoogte kosten. Dit onderzoek richt zich specifiek op het ontwikkelteam van BrightAnalytics en onderzoekt hoe RESTful API design principes, HATEOAS en OpenAPI, kunnen bijdragen aan een efficiëntere en kwalitatievere API-ontwikkeling binnen hun Laravel/Vue.js omgeving. De focus ligt op het identificeren van concrete best practices en het evalueren van hun impact op de dagelijkse workflow van de ontwikkelaars.
 
 \section{\IfLanguageName{dutch}{Onderzoeksvraag}{Research question}}%
 \label{sec:onderzoeksvraag}
 
-Wees zo concreet mogelijk bij het formuleren van je onderzoeksvraag. Een onderzoeksvraag is trouwens iets waar nog niemand op dit moment een antwoord heeft (voor zover je kan nagaan). Het opzoeken van bestaande informatie (bv. ``welke tools bestaan er voor deze toepassing?'') is dus geen onderzoeksvraag. Je kan de onderzoeksvraag verder specifiëren in deelvragen. Bv.~als je onderzoek gaat over performantiemetingen, dan 
+De centrale onderzoeksvraag van deze bachelorproef is: "Welke concrete voordelen biedt de implementatie van RESTful API design, en in het bijzonder HATEOAS en OpenAPI, voor de kwaliteit, consistentie en onderhoudbaarheid van een Laravel-API en een bijbehorende frontend applicatie?"
+
+De volgende deelvragen helpen deze centrale vraag te beantwoorden:
+\begin{itemize}
+  \item Hoe kunnen de principes van RESTful API design concreet worden toegepast in een Laravel project, en welke tools en libraries zijn hierbij relevant?
+  \item Biedt HATEOAS daadwerkelijk een meerwaarde op vlak van flexibiliteit en loose coupling tussen client en server in een Laravel/Vue.js applicatie, en zo ja, wegen deze voordelen op tegen de extra tijd en complexiteit die nodig zijn voor de implementatie?
+  \item Hoe kan OpenAPI bijdragen aan een verbeterde documentatie en standaardisatie van de BrightEats API, en hoe kunnen tools hierbij worden ingezet? 
+  \item Welke meetbare impact heeft de toepassing van RESTful design, HATEOAS en OpenAPI op de kwaliteit van de code, de snelheid van ontwikkeling en de onderhoudbaarheid van de BrightEats API, bijvoorbeeld op vlak van code complexiteit, aantal bugs en tijd besteed aan debugging?
+  \item Welke concrete aanpassingen zijn vereist in de Vue.js frontend om optimaal te kunnen integreren met een HATEOAS-gebaseerde API, en welke invloed hebben deze aanpassingen op de onderhoudbaarheid en robuustheid van de frontend code?
+\end{itemize}
 
 \section{\IfLanguageName{dutch}{Onderzoeksdoelstelling}{Research objective}}%
 \label{sec:onderzoeksdoelstelling}
 
-Wat is het beoogde resultaat van je bachelorproef? Wat zijn de criteria voor succes? Beschrijf die zo concreet mogelijk. Gaat het bv.\ om een proof-of-concept, een prototype, een verslag met aanbevelingen, een vergelijkende studie, enz.
+Het doel van deze bachelorproef is om praktische inzichten te verwerven in de voor- en nadelen van RESTful API design, HATEOAS en OpenAPI binnen de tech stack Laravel/Vue.js. Door middel van een literatuurstudie en de praktische case study van de BrightEats API, wordt de impact van deze principes op de kwaliteit, consistentie en onderhoudbaarheid van de API geëvalueerd, met een focus op meetbare resultaten. Het uiteindelijke doel is om concrete en haalbare aanbevelingen te formuleren over RESTful API design in Laravel, waarbij we enkel de principes behouden die een duidelijke meerwaarde bieden voor de ontwikkeling en het onderhoud van de API en de frontend applicatie.
 
 \section{\IfLanguageName{dutch}{Opzet van deze bachelorproef}{Structure of this bachelor thesis}}%
 \label{sec:opzet-bachelorproef}
@@ -41,10 +48,10 @@ Wat is het beoogde resultaat van je bachelorproef? Wat zijn de criteria voor suc
 
 De rest van deze bachelorproef is als volgt opgebouwd:
 
-In Hoofdstuk~\ref{ch:stand-van-zaken} wordt een overzicht gegeven van de stand van zaken binnen het onderzoeksdomein, op basis van een literatuurstudie.
-
-In Hoofdstuk~\ref{ch:methodologie} wordt de methodologie toegelicht en worden de gebruikte onderzoekstechnieken besproken om een antwoord te kunnen formuleren op de onderzoeksvragen.
-
-% TODO: Vul hier aan voor je eigen hoofstukken, één of twee zinnen per hoofdstuk
-
-In Hoofdstuk~\ref{ch:conclusie}, tenslotte, wordt de conclusie gegeven en een antwoord geformuleerd op de onderzoeksvragen. Daarbij wordt ook een aanzet gegeven voor toekomstig onderzoek binnen dit domein.
+\begin{itemize}
+  \item Hoofdstuk~\ref{ch:stand-van-zaken} presenteert een literatuurstudie over REST, HATEOAS en OpenAPI, inclusief best practices en implementatievoorbeelden in Laravel.
+  \item Hoofdstuk~\ref{ch:methodologie} beschrijft de methodologie van het onderzoek, inclusief de iteratieve ontwikkelingscyclus van de BrightEats API.
+  \item Hoofdstuk~\ref{ch:implementatie} detailleert de implementatie van RESTful principes en het opstellen van de OpenAPI-specificatie voor de BrightEats API. Hier worden codevoorbeelden, tools en de gemaakte keuzes besproken. Ook de aanpassingen in de frontend applicatie komen aan bod.
+  \item Hoofdstuk~\ref{ch:resultaten_en_evaluatie} evalueert de impact van de implementatie op kwaliteit, consistentie en onderhoudbaarheid. Hier worden de resultaten van tests, feedback van ontwikkelaars en de kost van implementatie geanalyseerd.
+  \item Hoofdstuk~\ref{ch:conclusie} concludeert het onderzoek en formuleert concrete aanbevelingen. Deze aanbevelingen gaan over best practices voor API-ontwikkeling en een afweging van de kosten en baten van RESTful design, HATEOAS en OpenAPI.
+\end{itemize}

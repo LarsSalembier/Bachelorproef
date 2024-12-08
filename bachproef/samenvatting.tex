@@ -25,24 +25,40 @@
 %
 % LET OP! Een samenvatting is GEEN voorwoord!
 
-%%---------- Nederlandse samenvatting -----------------------------------------
-%
-% TODO: Als je je bachelorproef in het Engels schrijft, moet je eerst een
-% Nederlandse samenvatting invoegen. Haal daarvoor onderstaande code uit
-% commentaar.
-% Wie zijn bachelorproef in het Nederlands schrijft, kan dit negeren, de inhoud
-% wordt niet in het document ingevoegd.
-
-\IfLanguageName{english}{%
-\selectlanguage{dutch}
-\chapter*{Samenvatting}
-\lipsum[1-4]
-\selectlanguage{english}
-}{}
-
 %%---------- Samenvatting -----------------------------------------------------
-% De samenvatting in de hoofdtaal van het document
 
 \chapter*{\IfLanguageName{dutch}{Samenvatting}{Abstract}}
+In de huidige, sterk gedigitaliseerde wereld, waarin applicaties continu met elkaar communiceren en data uitwisselen, spelen Application Programming Interfaces (API's) een cruciale rol. Een goed ontworpen en gedocumenteerde API is essentieel voor efficiënte integraties, vlotte datastromen en een schaalbare softwarearchitectuur. Dit is in het bijzonder relevant voor BrightAnalytics, een bedrijf dat een geavanceerd data-visualisatieplatform aanbiedt voor financiële rapportage en business intelligence. De kwaliteit, consistentie en efficiëntie van hun API's zijn van cruciaal belang voor de functionaliteit van hun producten, de integratie met andere systemen en de snelle ontwikkeling van nieuwe features.
 
-\lipsum[1-4]
+\bigskip
+
+Deze bachelorproef onderzoekt de praktische voordelen van RESTful API design, met name HATEOAS (Hypermedia as the Engine of Application State) en OpenAPI specificatie, voor de kwaliteit, consistentie en onderhoudbaarheid van een API in Laravel, de backend-technologie die BrightAnalytics gebruikt. Welke concrete voordelen bieden deze principes voor de ontwikkeling en het onderhoud van een API? Hoe beïnvloeden ze de efficiëntie en de kost van ontwikkeling? Welke
+impact hebben ze op de frontend-ontwikkeling en de gebruikerservaring? Zijn er principes die een te grote overhead met zich meebrengen, of die niet relevant zijn in de tech stack Laravel/Vue.js?
+
+\bigskip
+
+De centrale onderzoeksvraag luidt: "Welke concrete voordelen biedt de implementatie van RESTful API design, en in het bijzonder HATEOAS en OpenAPI, voor de kwaliteit, consistentie en onderhoudbaarheid van een Laravel-API en een bijbehorende frontend applicatie?"
+
+\bigskip
+
+Om deze vraag te beantwoorden, werden de volgende onderzoeksdoelstellingen geformuleerd:
+
+\begin{itemize}
+  \item een literatuurstudie uitvoeren naar RESTful API design principes, HATEOAS en OpenAPI specificatie;
+  \item de BrightEats API ontwikkelen en refactoren volgens deze standaarden
+  \item de impact van de implementatie van deze principes op de kwaliteit, consistentie en onderhoudbaarheid van de API evalueren, zowel vanuit backend- als frontend perspectief
+  \item de impact op de kost van ontwikkeling en onderhoud van de API evalueren: is de investering in een goed gestructureerde API gerechtvaardigd? Welke RESTful API design principes zijn het meest kostenefficiënt? Zijn er principes die een te grote overhead met zich meebrengen?
+  \item op basis van de bevindingen aanbevelingen formuleren voor BrightAnalytics over de toepassing van RESTful API design, HATEOAS en OpenAPI.
+\end{itemize}
+
+\bigskip
+
+De methodologie van dit onderzoek omvatte een literatuurstudie naar RESTful API design principes, HATEOAS en OpenAPI, alsook een praktische case study bij BrightAnalytics, waarbij de BrightEats API iteratief werd ontwikkeld en verfijnd. De impact van de implementatie van deze principes op de kwaliteit, consistentie en onderhoudbaarheid van de API werd geëvalueerd, zowel vanuit backend- als frontend perspectief. De bevindingen uit de literatuurstudie werden direct toegepast in de ontwikkeling van de API, en de ervaringen tijdens de ontwikkeling stuurden het onderzoek bij.
+
+\bigskip
+
+% resultaten
+
+\bigskip
+
+% conclusies, aanbevelingen, beperkingen
