@@ -5,14 +5,80 @@
 \chapter{Conclusie}%
 \label{ch:conclusie}
 
-% TODO: Trek een duidelijke conclusie, in de vorm van een antwoord op de
-% onderzoeksvra(a)g(en). Wat was jouw bijdrage aan het onderzoeksdomein en
-% hoe biedt dit meerwaarde aan het vakgebied/doelgroep? 
-% Reflecteer kritisch over het resultaat. In Engelse teksten wordt deze sectie
-% ``Discussion'' genoemd. Had je deze uitkomst verwacht? Zijn er zaken die nog
-% niet duidelijk zijn?
-% Heeft het onderzoek geleid tot nieuwe vragen die uitnodigen tot verder 
-%onderzoek?
+Dit hoofdstuk sluit deze bachelorproef af door de belangrijkste bevindingen samen te vatten en de centrale onderzoeksvraag te beantwoorden. Op basis van de resultaten en evaluatie uit het vorige hoofdstuk formuleren we concrete aanbevelingen voor de ontwikkeling van RESTful API's bij BrightAnalytics, met focus op het verbeteren van kwaliteit, consistentie en onderhoudbaarheid.
 
-\lipsum[76-80]
+\bigskip
 
+De implementatie van RESTful API principes en de OpenAPI specificatie in de BrightEats API heeft geleid tot significante verbeteringen op verschillende vlakken:
+
+\begin{itemize}
+  \item \textbf{Kwaliteit:} De kwaliteit van de API is aanzienlijk verbeterd door de implementatie van geautomatiseerde tests en een focus op robuustheid. De API is stabieler, betrouwbaarder en beter bestand tegen fouten.
+  \item \textbf{Consistentie:} De API is consistent in design en implementatie dankzij de strikte naleving van RESTful principes en het gebruik van onze opgestelde guidelines. De endpoints zijn uniform ontworpen, HTTP response codes worden correct gebruikt en datastructuren zijn voorspelbaar. Er is nog ruimte voor verbetering in de responses zelf.
+  \item \textbf{Onderhoudbaarheid:} De onderhoudbaarheid van de API is sterk verbeterd door de gestructureerde code, de uitgebreide documentatie en de test suite. De tijd besteed aan debugging is verminderd en het toevoegen van nieuwe features is eenvoudiger geworden.
+\end{itemize}
+
+De implementatie van de OpenAPI specificatie was de grootste kostenpost, met name de tijd die nodig was om PHPDoc comments toe te voegen aan de code. Deze initiële investering heeft zich echter terugbetaald in de vorm van automatisch gegenereerde documentatie, verbeterde communicatie, eenvoudigere debugging en snellere onboarding van nieuwe developers.
+
+\bigskip
+
+De evaluatie van de BrightEats API toont aan dat de implementatie van RESTful API principes en de OpenAPI specificatie een positieve impact heeft op de kwaliteit, consistentie en onderhoudbaarheid van de API. De API is stabieler, betrouwbaarder en beter bestand tegen fouten. De endpoints zijn uniform ontworpen, HTTP response codes worden correct gebruikt en datastructuren zijn voorspelbaar. De onderhoudbaarheid van de API is sterk verbeterd door de gestructureerde code, de uitgebreide documentatie en de test suite.
+
+\section{Antwoord op de onderzoeksvraag}
+
+De centrale onderzoeksvraag van deze bachelorproef luidt als volgt:
+
+\begin{displayquote}
+  \textit{Welke concrete voordelen biedt de implementatie van RESTful API design, en in het bijzonder HATEOAS en OpenAPI, voor de kwaliteit, consistentie en onderhoudbaarheid van een Laravel-API en een bijbehorende frontend applicatie?}
+\end{displayquote}
+
+Op basis van de bevindingen uit dit onderzoek kunnen we deze vraag als volgt beantwoorden:
+
+\subsection{RESTful API design}
+
+De implementatie van RESTful API design principes heeft een positieve impact gehad op de kwaliteit, consistentie en onderhoudbaarheid van de BrightEats Laravel-API. De gestructureerde aanpak, met een duidelijke scheiding van concerns (controllers, services, models), een consistent gebruik van HTTP methoden en status codes, en de toepassing en opstelling van een set duidelijke guidelines, heeft geresulteerd in een robuuste, voorspelbare en makkelijk te begrijpen API. Dit heeft op zijn beurt geleid tot een verhoogde kwaliteit van de code, een snellere ontwikkeling en een verbeterde onderhoudbaarheid.
+
+\subsection{HATEOAS}
+
+De beslissing om HATEOAS \textit{niet} te implementeren bleek de juiste te zijn. De meerwaarde van HATEOAS in het geval van de BrightEats API, die enkel intern bij BrightAnalytics gebruikt wordt, woog niet op tegen de complexiteit en overhead die gepaard gaan met de implementatie ervan. De uitgebreide documentatie gegenereerd door OpenAPI, in combinatie met de duidelijke communicatie binnen het development team, biedt voldoende mogelijkheden voor ontwikkelaars om de API te begrijpen en te gebruiken.
+
+\subsection{OpenAPI}
+
+OpenAPI heeft een cruciale rol gespeeld in het verbeteren van de documentatie en standaardisatie van de API. De automatisch gegenereerde, interactieve documentatie dient als een centrale bron van waarheid voor alle ontwikkelaars en vereenvoudigt de samenwerking tussen frontend en backend teams. Bovendien opent OpenAPI de mogelijkheid voor toekomstige automatisering, zoals het genereren van client SDK's en het valideren van requests en responses.
+
+\section{Aanbevelingen}
+
+De aanbevelingen voor API design bij BrightAnalytics zijn opgesteld in hoofdstuk 4 van deze bachelorproef. Hier gaan we concreet bepalen wat een RESTful API is en zorgen we voor minder ambigu\"iteit in API responses, requests, query parameters, foutafhandeling, caching en versiebeheer. Dit document dient een startpunt te worden voor een goede set guidelines die in het algemeen kunnen worden gebruikt voor het bouwen van performante, robuuste en onderhoudbare API's.
+
+\bigskip
+
+Niet alle guidelines die werden opgesteld in dit onderzoek zijn even relevant voor elk project. Voor BrightEats bijvoorbeeld hebben we de meer geavanceerde guidelines over query parameters, filters en sortering niet moeten implementeren. Voor andere projecten zullen andere delen van de guidelines minder of meer relevant zijn. Het is belangrijk om de guidelines te zien als een set van best practices die kunnen worden aangepast aan de specifieke noden van elk project.
+
+\bigskip
+
+Daarnaast raden we aan om de implementatie van OpenAPI verder te onderzoeken en te integreren in de bestaande ontwikkelprocessen. De voordelen van automatisch gegenereerde documentatie, standaardisatie en automatisering wegen op tegen de initi\"ele investering die nodig is om de specificatie op te stellen. Het is belangrijk om de documentatie up-to-date te houden en te integreren in de dagelijkse workflow van de ontwikkelaars. Op die manier wordt de documentatie een levend document dat een centrale bron van waarheid vormt voor alle betrokken partijen.
+
+\section{Reflectie en toekomstig onderzoek}
+
+Het onderzoeksproces verliep over het algemeen vlot. De iteratieve aanpak, waarbij de API stapsgewijs werd ontwikkeld en getest, bleek effectief. De keuze om vroeg in het proces te focussen op OpenAPI heeft de documentatie en consistentie van de API sterk verbeterd.
+
+\bigskip
+
+Een punt van verbetering is de diepgang van de evaluatie van de onderhoudskosten. Hoewel de tijd besteed aan debugging is afgenomen naarmate de API meer RESTful werd, is het lastig om dit exact te kwantificeren. Een meer gedetailleerde tracking van de ontwikkeltijd had hier meer inzicht in kunnen geven.
+
+\bigskip
+
+Een beperking van dit onderzoek is de focus op een specifieke use case, namelijk de BrightEats API. De bevindingen zijn mogelijk niet generaliseerbaar naar andere API's of andere contexten.
+
+\subsection{Suggesties voor toekomstig onderzoek}
+
+\begin{itemize}
+  \item \textbf{Langetermijnevaluatie:} Een evaluatie van de impact van RESTful API design en OpenAPI op de onderhoudskosten op langere termijn zou waardevolle inzichten kunnen opleveren.
+  \item \textbf{Vergelijking met andere API-stijlen:} Een vergelijking van de RESTful aanpak met andere API stijlen, zoals GraphQL, zou interessant zijn om de voor- en nadelen van elke stijl beter te begrijpen.
+  \item \textbf{Automatische validatie met OpenAPI:} Verder onderzoek naar het gebruik van OpenAPI voor het automatisch valideren van requests en responses zou de robuustheid van API's kunnen verhogen.
+  \item \textbf{API-beveiliging:} Een diepere analyse van de implementatie van API security maatregelen zou een belangrijke toevoeging zijn aan toekomstig onderzoek.
+  \item \textbf{Performance testen:} Onderzoek naar de performance implicaties van verschillende API design keuzes zou waardevol zijn voor het optimaliseren van de API performance.
+\end{itemize}
+
+\section{Afsluiting}
+
+Goed API-ontwerp is essentieel voor het succes van moderne software applicaties. Een goed ontworpen API is niet alleen robuust, consistent en onderhoudbaar, maar ook makkelijk te gebruiken en te integreren met andere systemen. Deze bachelorproef heeft aangetoond dat de implementatie van RESTful API principes en de OpenAPI specificatie een significante bijdrage levert aan het bereiken van deze doelen. De aanbevelingen in deze bachelorproef bieden BrightAnalytics concrete handvatten voor het ontwikkelen van hoogwaardige API's, wat de efficiëntie van het development team verhoogt en de kwaliteit van de software verbetert.

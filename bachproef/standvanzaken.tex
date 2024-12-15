@@ -393,15 +393,6 @@ Vue.js-applicaties kunnen de Laravel API consumeren met behulp van HTTP clients 
 
 \begin{listing}[H]
 \begin{minted}{javascript}
-  <template>
-  <ul>
-    <li v-for="product in products" :key="product.id">
-      {{ product.name }} - {{ product.price }}
-    </li>
-  </ul>
-  </template>
-
-  <script>
   import axios from 'axios';
 
   export default {
@@ -420,7 +411,6 @@ Vue.js-applicaties kunnen de Laravel API consumeren met behulp van HTTP clients 
       });
   },
   };
-  </script>
 \end{minted}
 \caption[Voorbeeld van het ophalen van data van een Laravel API in Vue.js]{Voorbeeld van het ophalen van data van een Laravel API in Vue.js met behulp van Axios.}
 \label{lst:vue_axios}

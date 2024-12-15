@@ -1,0 +1,1069 @@
+\chapter{Richtlijnen}
+\label{ch:richtlijnen}
+
+Deze richtlijnen zijn opgesteld om de consistentie, kwaliteit en onderhoudbaarheid van RESTful API's binnen BrightAnalytics te waarborgen. Ze zijn gebaseerd op de Zalando RESTful API Guidelines \autocite{ZAG2024} en aangepast aan de specifieke context van BrightAnalytics.
+
+\section{Principes}
+
+Een RESTful API heeft als doel om resources te modelleren en toegankelijk te maken via een uniforme interface. Ze kunnen ge\"identificeerd via URI's en kunnen aangepast worden via gestandaardiseerde HTTP-methoden (GET, POST, PUT, PATCH, DELETE).
+
+\bigskip
+
+De API moet consistent, voorspelbaar en gemakkelijk te gebruiken zijn voor ontwikkelaars. Dit betekent dat URI's, HTTP-methoden, statuscodes en dataformaten consistent en goed gedocumenteerd moeten zijn.
+
+\bigskip
+
+Een belangrijk principe is de Wet van Postel, ook bekend als het Robustness Principle: ``Wees conservatief in wat je stuurt, en liberaal in wat je ontvangt''. Dit betekent dat de API tolerant moet zijn ten opzichte van variaties in input, maar dat de output consistent en voorspelbaar moet zijn.
+
+\section{Algemeen}
+
+\subsection{Elke API moet gedocumenteerd worden met OpenAPI}
+\label{section:openapi_documentatie}
+
+Hierbij is het zeker toegelaten om tools te gebruiken die de OpenAPI-specificatie genereren op basis van de code, zoals Swagger UI of Redoc. Dit zorgt voor een consistente en gemakkelijk toegankelijke documentatie voor ontwikkelaars. Voor Laravel gebruiken we de package \texttt{dedoc/scramble} om de OpenAPI-specificatie te genereren en te renderen.
+
+\subsection{Elke API moet een handleiding bevatten}
+\label{section:api_handleiding}
+
+Naast de API-specificatie is het belangrijk om een handleiding te voorzien die de API beschrijft, inclusief voorbeelden en best practices. Deze handleiding bevindt zich meestal in de \texttt{README} van de repository. Deze bevat zeker de volgende informatie:
+
+\begin{itemize}
+    \item De scope van de API, samen met het nut ervan en de use cases.
+    \item Concrete voorbeelden van het gebruik van de API.
+    \item Edge cases, wat te doen bij foutmeldingen en veelvoorkomende problemen en oplossingen.
+    \item Informatie over authenticatie en autorisatie.
+    \item Informatie over versiebeheer en migratie.
+    \item De algemene architectuur van de API en de gebruikte technologieën.
+\end{itemize}
+
+\subsection{API's moeten geschreven worden in Amerikaans Engels}
+\label{section:amerikaans_engels}
+
+Dit om consistentie te garanderen en het gemakkelijker te maken voor ontwikkelaars om de API te begrijpen.
+
+\section{REST - Meta-informatie}
+
+\subsection{De OpenAPI-specificatie moet meta-informatie bevatten}
+\label{section:openapi_meta_informatie}
+
+De OpenAPI-specificatie bevat minstens de volgende meta-informatie:
+
+\begin{itemize}
+    \item \texttt{\#/info/title}: De naam van de API. Deze moet uniek, beschrijvend en gemakkelijk te begrijpen zijn.
+    \item \texttt{\#/info/version}: De versie van de API. Dit is belangrijk voor versiebeheer en migratie. We gebruiken hierbij semantic versioning (SemVer), zie \ref{subsection:semantic_versioning}.
+    \item \texttt{\#/info/description}: Een korte maar duidelijke beschrijving van de API en zijn doel en scope.
+    \item \texttt{\#/info/contact/{name,url,email}}: Contactinformatie voor de ontwikkelaars van de API.
+\end{itemize}
+
+\subsection{De API moet semantic versioning gebruiken}
+\label{subsection:semantic_versioning}
+
+Semantic versioning (SemVer) is een conventie voor het versiebeheer van software. Het bestaat uit drie getallen, gescheiden door punten: \texttt{MAJOR.MINOR.PATCH}. Bij elke wijziging in de API moet minstens één van deze cijfers verhoogd worden:
+
+\begin{itemize}
+    \item \textbf{MAJOR}: Verhoog bij incompatibele wijzigingen in de API.
+    \item \textbf{MINOR}: Verhoog bij toevoeging van nieuwe functionaliteit in een backwards-compatible manier.
+    \item \textbf{PATCH}: Verhoog bij backwards-compatible bugfixes die de functionaliteit niet uitbreiden.
+\end{itemize}
+
+Vooraleer de API in productie gaat, zal de versie steeds \texttt{0.x.y} zijn. Dit betekent dat de API nog in ontwikkeling is en dat er nog geen garanties zijn over de stabiliteit van de API. Wanneer de API klaar is voor productie, zal de versie verhoogd worden naar \texttt{1.0.0}.
+
+\section{REST - Beveiliging}
+
+\subsection{Endpoints moeten beveiligd zijn}
+\label{section:beveiligde_endpoints}
+
+Alle endpoints moeten beschermd worden met authenticatie en autorisatie. De keuze van de methode hangt af van de use case en de gevoeligheid van de data. Mogelijkheden zijn bearer tokens, API keys, OAuth 2.0, en JWT.
+
+\section{REST - Dataformaten}
+
+\subsection{De API moet standaard dataformaten gebruiken}
+\label{section:standaard_dataformaten}
+
+OpenAPI definieert standaard dataformaten voor de meeste datatypes. Deze moeten gebruikt worden om de consistentie en voorspelbaarheid van de API te garanderen. Hiervoor verwijs ik naar de tabel in guideline 238 van de Zalando RESTful API Guidelines \autocite{ZAG2024}.
+
+\subsection{De API moet een formaat voor getallen en integers gebruiken.}
+\label{section:formaat_getallen_integers}
+
+Specifieer steeds een formaat \texttt{int32}, \texttt{int64}, of \texttt{bigint} voor \texttt{integer} waarden en \texttt{float}, \texttt{double}, of \texttt{decimal} voor \texttt{number} waarden. Op die manier moeten clients niet raden welk formaat gebruikt wordt en kunnen ze de data correct verwerken, zonder verlies van precisie.
+
+\bigskip
+
+Client en server moeten de dataformaten zo specifiek mogelijk vertalen naar hun eigen datastructuren. Bijvoorbeeld, het type \texttt{number} met formaat \texttt{double} in OpenAPI kan vertaald worden naar een \texttt{double} in Java of een \texttt{float64} in Go.
+
+\subsection{De API moet binaire data als \texttt{base64url} coderen.}
+\label{section:binaire_data_base64url}
+
+Je moet eerst proberen om binaire data te vermijden in API's. Als dit niet mogelijk is, moet je binaire data als \texttt{base64url} coderen volgens \textcite{rfc7493}. Dit zorgt ervoor dat de data correct verwerkt kan worden door clients en dat er geen data verloren gaat.
+
+Binaire data kan vermeden worden door de data terug te geven met een standaard media type, zoals \texttt{image/png} of \texttt{application/pdf}. Dit is meestal de beste oplossing, omdat het de grootte van de response vermindert en de data correct kan verwerkt worden door clients.
+
+\subsection{De API moet een formaat voor datum en tijd gebruiken.}
+\label{section:formaat_datum_tijd}
+
+Gebruik de standaard formaten \texttt{date}, \texttt{date-time}, \texttt{time}, \texttt{duration}, en \texttt{period} voor datum en tijd waarden. Dit zorgt voor consistentie en voorspelbaarheid in de API.
+
+\bigskip
+
+Gebruik de hoofdletter \texttt{T} als scheidingsteken tussen datum en tijd, en de hoofdletter \texttt{Z} voor het aanduiden van Zulu time. Dit is niet verplicht volgens \textcite{rfc3339}, maar het is een veelgebruikte conventie en zorgt ervoor dat responses voorspelbaarder zijn.
+
+\bigskip
+
+De standaard laat time zone offsets toe, maar deze kunnen verwarrend zijn en zijn niet altijd nodig. Gebruik enkel time zone offsets als het nodig is voor de use case. Als je time zone offsets gebruikt, gebruik dan de \texttt{Z} notatie voor Zulu time (UTC) en de \texttt{+HH:MM} notatie voor andere tijdzones. Voor het opslaan van de data in een databank gebruiken we verplicht altijd UTC-tijd.
+
+\bigskip
+
+Gebruik geen numerieke timestamps. Numerieke timestamps kunnen problemen veroorzaken met precisie. Gebruik altijd een datum- en tijdformaat.
+
+\subsection{De API moet een goede keuze maken tussen \texttt{date} en \texttt{date-time}.}
+\label{section:keuze_date_date_time}
+
+Bij het kiezen tussen \texttt{date} en \texttt{date-time}, moet je rekening houden met de volgende zaken:
+
+\begin{itemize}
+    \item \texttt{date}: Gebruik \texttt{date} als enkel de datum belangrijk is en de tijd niet relevant is. Bijvoorbeeld: geboortedatum, startdatum, einddatum. Zonder extra context bedoelen we met \texttt{date} altijd de volledige dag, van middernacht tot middernacht, in de lokale tijdzone. De tijdzone kan echter ook gedefineerd worden door de context van de API, zoals bijvoorbeeld een ander veld dat een locatie bevat.
+    \item \texttt{date-time}: Gebruik \texttt{date-time} als zowel de datum als de tijd belangrijk zijn. Hier is het meegeven van een tijdzone verplicht, en geven we de voorkeur aan UTC-tijd. Bijvoorbeeld: een afspraak, een deadline, een event.
+\end{itemize}
+
+\subsection{De API moet standaardformaten gebruiken voor tijdsduur en tijdsinterval.}
+\label{section:standaardformaten_tijdsduur_tijdsinterval}
+
+Gebruik de standaardformaten \texttt{duration} en \texttt{period} voor tijdsduur en tijdsinterval waarden. Dit zorgt voor consistentie en voorspelbaarheid in de API. We gebruiken hierbij ook de \textcite{rfc3339} notatie die open-ended intervals ondersteunt. Dit is de syntax voor \texttt{duration} en \texttt{period} in ANBF:
+
+\begin{minted}{text}
+  <dur-second>        ::= [0-9]+S
+  <dur-minute>        ::= [0-9]+M <dur-second>?
+  <dur-hour>          ::= [0-9]+H <dur-minute>?
+  <dur-time>          ::= T<dur-hour> | T<dur-minute> | T<dur-second>
+  <dur-day>           ::= [0-9]+D
+  <dur-week>          ::= [0-9]+W
+  <dur-month>         ::= [0-9]+M <dur-day>?
+  <dur-year>          ::= [0-9]+Y <dur-month>?
+  <dur-date>          ::= <dur-year> <dur-time>? | <dur-month> <dur-time>? | <dur-day> <dur-time>?
+  <duration>          ::= P<dur-date> | P<dur-time> | P<dur-week>
+
+  <period-explicit>   ::= <iso-date-time>/<iso-date-time>
+  <period-start>      ::= <iso-date-time>/<duration> | -- startdatum en duur
+                          <iso-date-time/..          | -- zonder einde
+  <period-end>        ::= <duration>/<iso-date-time> | -- duur en einddatum
+                          ../<iso-date-time>          -- zonder begin
+  <period>            ::= <period-explicit> | <period-start> | <period-end>
+\end{minted}
+
+Een query parameter die een tijdsinterval representeert, definiëren we als \texttt{<time-property>\_between} en niet als \texttt{<time-property>\_before} en \texttt{<time-property>\_after}. Als we een tijdsinterval teruggeven doen we dit met de naam \texttt{<time-property>\_interval}.
+
+\subsection{De API moet de standaardformaten voor landen, talen en valuta gebruiken.}
+\label{section:standaardformaten_landen_talen_valuta}
+
+Gebruik de standaardformaten \texttt{iso-3166-alpha-2} \autocite{iso3166-1}, \texttt{iso-639-1} \autocite{iso639}, en \texttt{iso-4217} \autocite{iso4217} voor landen, talen en valuta. Dit zorgt voor consistentie en voorspelbaarheid in de API.
+
+\subsection{De API moet content negotiation gebruiken voor dataformaten als er meerdere opties zijn.}
+\label{section:content_negotiation}
+
+Als er meerdere opties zijn voor dataformaten, zoals JSON, PDF, TEXT of HTML, moet de API content negotiation gebruiken om de voorkeur van de client te bepalen. Hiervoor gebruiken we de volgende HTTP headers:
+
+\begin{itemize}
+    \item \texttt{Accept}: De client geeft aan welke content types hij accepteert.
+    \item \texttt{Accept-Language}: De client geeft aan welke talen hij accepteert.
+    \item \texttt{Accept-Encoding}: De client geeft aan welke encodings hij accepteert.
+    \item \texttt{Content-Type}: De server geeft aan welk content type hij terugstuurt.
+    \item \texttt{Content-Language}: De server geeft aan in welke taal hij terugstuurt.
+    \item \texttt{Content-Encoding}: De server geeft aan in welke encoding hij terugstuurt.
+\end{itemize}
+
+\section{REST - URL's}
+
+\subsection{De API mag niet \text{/api} als basispad gebruiken.}
+\label{section:geen_api_basispad}
+
+Het is niet nodig om \texttt{/api} als basispad te gebruiken voor de API. Het basispad van een API is een kwestie van deployment, en kan dus variëren afhankelijk van de omgeving. Het is beter om het basispad dynamisch te maken, zodat het kan ingesteld worden via een configuratiebestand of een omgevingsvariabele.
+
+\subsection{De API moet zelfstandige naamwoorden in het meervoud gebruiken voor resource collections.}
+\label{section:meervoud_resource_collections}
+
+Gebruik zelfstandige naamwoorden in het meervoud voor resource collections. Dit zorgt voor een consistente en voorspelbare URI-structuur. Voorbeelden zijn \texttt{/orders}, \texttt{/users}, \texttt{/shops}.
+
+\subsection{De API moet kebab-case gebruiken voor URI's.}
+\label{section:kebab_case_uris}
+
+Gebruik kebab-case om woorden te scheiden in URI-segmenten. Dit zorgt voor een consistente en leesbare URI-structuur. Dit wil zeggen dat je alles in kleine letters schrijft en koppeltekens gebruikt om woorden te scheiden. Bijvoorbeeld: \texttt{/order-items}, \texttt{/user-profile}, \texttt{/product-categories}.
+
+\subsection{De API moet genormaliseerde paden gebruiken zonder lege padsegmenten of trailing slashes.}
+\label{section:genormaliseerde_paden}
+
+Gebruik genormaliseerde paden zonder lege padsegmenten of trailing slashes. Dit zorgt voor een consistente en voorspelbare URI-structuur. Bijvoorbeeld: \texttt{/orders}, niet \texttt{/orders/}, \texttt{/orders//}, \texttt{//orders}.
+
+Zorg ervoor dat de API wel paden accepteert met een trailing slash, maar dat deze automatisch geredirect worden naar de versie zonder trailing slash. Dit zorgt ervoor dat de API toegankelijk is voor zowel mensen die een trailing slash gebruiken als mensen die dat niet doen. De volgende requests moeten naar dezelfde resource leiden:
+
+\begin{itemize}
+    \item \texttt{GET /orders}
+    \item \texttt{GET /orders/}
+    \item \texttt{GET /orders//}
+\end{itemize}
+
+\subsection{De API moet URL's zonder werkwoorden gebruiken.}
+\label{section:geen_werkwoorden_urls}
+
+Gebruik geen werkwoorden in URI's. De actie wordt bepaald door de HTTP-methode. Dit zorgt voor een consistente en voorspelbare URI-structuur. Bijvoorbeeld: \texttt{/orders}, niet \texttt{/get-orders}, \texttt{/create-order}, \texttt{/delete-order}.
+
+\subsection{De API moet acties vermijden - gebruik resources in plaats daarvan.}
+\label{section:vermijd_acties}
+
+Vermijd acties in URI's. Gebruik resources in plaats daarvan.
+
+\subsection{De API moet nuttige resources en geen technische resources gebruiken.}
+\label{section:nuttige_resources}
+
+Een goede vuistregel is dat resources moeten gedefinieerd worden zodat ze 90\% van de use cases afdekken. Een nuttige resource bevat zoveel mogelijk nodige informatie, maar niet meer dan nodig. Een goede manier om de laatste 10\% van de use cases af te dekken is door filtering en embedding toe te staan (zie secties \ref{subsection:partial_responses} en \ref{subsection:embedding_subresources}).
+
+\subsection{De API moet volledige businessprocessen ondersteunen.}
+\label{section:volledige_businessprocessen}
+
+Een API bevat volledige businessprocessen die alle resources bevatten die het proces nodig heeft. Dit zorgt ervoor dat clients het volledige proces begrijpen en correct kunnen implementeren. Dit vermijdt ook dat APIs een dunne laag worden die enkel CRUD-operaties uitvoert op een database.
+
+\subsection{De API moet resources en subresources via padsegmenten identificeren.}
+\label{section:resources_subresources_padsegmenten}
+
+Sommige API-resources kunnen subresources bevatten. Subresources zijn deel van de resource en kunnen niet gebruikt worden buiten de context van de resource. Gebruik padsegmenten om subresources te identificeren, als volgt: \texttt{/group-orders/\{group-order-id\}/orders/\{order-id\}}.
+
+\bigskip
+
+Om de customer/developer experience te verbeteren, zorg je voor intuitief begrijpbare URL's. Dit betekent dat je URL's moet ontwerpen die de structuur van de data weerspiegelen en die gemakkelijk te begrijpen zijn voor de gebruiker. Dit betekent bijvoorbeeld dat als \texttt{/group-orders/\{group-orders-id\}/orders/\{order-id\}} bestaat, \texttt{/group-orders/\{group-order-id\}/orders} en \texttt{/group-orders/\{group-order-id\}} ook moeten bestaan.
+
+\subsection{De API moet diep geneste resources vermijden.}
+\label{section:vermijd_diep_geneste_resources}
+
+Vermijd diep geneste resources. Dit maakt de API moeilijk te begrijpen en te gebruiken voor ontwikkelaars. Gebruik subresources in plaats daarvan. Als je merkt dat je meer dan 3 niveaus diep gaat, is het waarschijnlijk dat je te diep genest bent.
+
+\subsection{De API moet snake\_case gebruiken voor query parameters.}
+\label{section:snake_case_query_parameters}
+
+Gebruik snake\_case om woorden te scheiden in query parameters. Dit zorgt voor een consistente en leesbare URI-structuur. Dit wil zeggen dat je alles in kleine letters schrijft en underscores gebruikt om woorden te scheiden. Bijvoorbeeld: \texttt{/orders?status=payment\_pending\&sort=-date}, niet \texttt{/orders?status=paymentPending\&sort=-date}.
+
+\subsection{De API moet standaard query parameters gebruiken}
+\label{subsection:standaard_query_parameters}
+
+De volgende query parameters hebben een gedefinieerde betekenis en moeten consistent gebruikt worden:
+
+\begin{itemize}
+  \item \texttt{q}: Zoeken. Gebruik dit voor full-text search. Specifieke zoekvelden kunnen ook toegevoegd worden.
+  \item \texttt{sort}: Sorteren. Gebruik dit voor sorteren op één of meerdere velden. Gebruik een minteken (\texttt{-}) voor aflopende sortering, en een plusteken (\texttt{+}) voor oplopende sortering. Als er geen minteken of plusteken voor het veld staat, is de sortering oplopend.
+  \item \texttt{fields}: Velden. Gebruik dit voor het selecteren van specifieke velden. Dit is handig voor het optimaliseren van de response size (zie sectie \ref{subsection:partial_responses}).
+  \item \texttt{embed}: Embedding. Gebruik dit voor het embedden van gerelateerde resources. Dit is handig voor het optimaliseren van het aantal requests (zie sectie \ref{subsection:embedding_subresources}).
+  \item \texttt{page}: Paginering. Gebruik dit voor paginering van resultaten. Gebruik \texttt{page} voor de huidige pagina en \texttt{per\_page} voor het aantal resultaten per pagina (zie sectie \ref{subsection:paginering}).
+  \item \texttt{limit}: Limiteren. Gebruik dit voor het limiteren van het aantal resultaten. Dit is handig voor het optimaliseren van de response size.
+\end{itemize}
+
+\section{REST - JSON}
+
+\subsection{De API moet JSON als standaard dataformaat gebruiken}
+\label{subsection:json_standaard}
+
+Gebruik JSON (\autocite{rfc7159}) voor gestructureerde data in requests en responses. De JSON payload moet een object zijn als top-level data structuur.
+
+\subsection{Single Resource Schema}
+\label{subsection:single_resource_schema}
+
+De API zou zoveel mogelijk een uniform schema voor lezen en schrijven moeten gebruiken.
+
+\subsection{De API mag andere dataformaten dan JSON ondersteunen}
+\label{subsection:andere_dataformaten}
+
+Andere dataformaten dan JSON mogen ondersteund worden, maar enkel als er een specifieke noodzaak voor is en als JSON als standaard dataformaat behouden blijft.
+
+\subsection{De API zou standaard media types moeten gebruiken}
+\label{subsection:standaard_media_types}
+
+Gebruik standaard media types zoals gedefinieerd in de IANA media type registry. Gebruik \texttt{application/json} voor JSON payloads.
+
+\subsection{De API zou array namen in het meervoud moeten schrijven}
+\label{subsection:array_namen_meervoud}
+
+Namen van arrays zouden in het meervoud moeten staan om aan te geven dat ze meerdere waarden bevatten. Objectnamen moeten in het enkelvoud staan.
+
+\subsection{De API moet \texttt{snake\_case} gebruiken voor property namen}
+\label{subsection:snake_case_property_namen}
+
+Property namen moeten in \texttt{snake\_case} geschreven worden. Dit wil zeggen dat je alles in kleine letters schrijft en underscores gebruikt om woorden te scheiden. Bijvoorbeeld: \texttt{order\_date}, \texttt{user\_id}.
+
+\subsection{De API zou \texttt{UPPER\_SNAKE\_CASE} moeten gebruiken voor enum waarden}
+\label{subsection:upper_snake_case_enum}
+
+Enum waarden zouden in \texttt{UPPER\_SNAKE\_CASE} geschreven moeten worden. Dit wil zeggen dat je alles in hoofdletters schrijft en underscores gebruikt om woorden te scheiden. Bijvoorbeeld: \texttt{PENDING}, \texttt{CONFIRMED}, \texttt{CANCELLED}.
+
+\subsection{De API zou een naamgevingsconventie voor datum/tijd properties moeten gebruiken}
+\label{subsection:naamgevingsconventie_datum_tijd}
+
+Namen van datum en tijd properties zouden een van de volgende woorden moeten bevatten: \texttt{date}, \texttt{day}, \texttt{time}, \texttt{timestamp}, of moeten eindigen op \texttt{\_at}. Bijvoorbeeld: \texttt{created\_at}, \texttt{order\_date}, \texttt{last\_login\_time}.
+
+\subsection{De API moet dezelfde semantiek gebruiken voor \texttt{null} en afwezige properties (\ref{subsection:null_afwezige_properties}).}
+
+Als een property zowel \texttt{nullable} als niet-\texttt{required} is, moeten \texttt{null} en afwezigheid op dezelfde manier behandeld worden.
+
+\subsection{De API moet dezelfde semantiek gebruiken voor \texttt{null} en afwezige properties}
+\label{subsection:null_afwezige_properties}
+
+Boolean properties mogen geen \texttt{null} waarde hebben. Gebruik een enumeratie met waarden \texttt{YES}, \texttt{NO}, \texttt{UNKNOWN} in plaats van een boolean met \texttt{null} als de use case dit vereist.
+
+\subsection{De API mag geen \texttt{null} gebruiken voor lege arrays}
+\label{subsection:geen_null_lege_arrays}
+
+Lege arrays zouden gerepresenteerd moeten worden als \texttt{[]}, niet als \texttt{null}.
+
+\section{REST - Velden}
+
+\subsection{De API moet veldnamen en semantiek hergebruiken}
+\label{subsection:veldnamen_semantiek_hergebruiken}
+
+Gebruik, indien mogelijk, bestaande veldnamen en semantiek. Dit zorgt voor consistentie en herkenbaarheid. Veelgebruikte veldnamen zijn:
+
+\begin{itemize}
+    \item \texttt{id}: De unieke identifier van een object. Gebruik geen ID's als getallen, maar als strings.
+    \item \texttt{<object>\_id}: Een veld in een object dat verwijst naar de ID van een gerelateerd object. Bijvoorbeeld: \texttt{order\_id}, \texttt{user\_id}.
+    \item \texttt{etag}: De ETag van een resource. Gebruik dit voor caching en optimistic locking.
+\end{itemize}
+
+Zie sectie \ref{subsection:naamgevingsconventie_datum_tijd} voor datum/tijd veldnamen.
+
+\section{REST - HTTP Methoden}
+
+\subsection{De API moet HTTP-methoden correct gebruiken}
+\label{subsection:correct_gebruik_http_methoden}
+
+Gebruik HTTP-methoden volgens hun standaard semantiek (zie \autocite{rfc9110}).
+
+\begin{itemize}
+    \item \texttt{GET}: Voor het opvragen van een enkele resource of een collectie van resources.
+    \begin{itemize}
+        \item \texttt{GET} requests mogen geen request body hebben.
+        \item \texttt{GET} requests op een enkele resource geven \texttt{404} als de resource niet bestaat.
+        \item \texttt{GET} requests op een collectie geven \texttt{200} (ook als de collectie leeg is) of \texttt{404} (als de collectie niet bestaat).
+    \end{itemize}
+    \item \texttt{POST}: Voor het aanmaken van een resource of het uitvoeren van een actie.
+    \begin{itemize}
+        \item \texttt{POST} requests op een collectie resource moeten een nieuwe resource aanmaken in die collectie.
+        \item Succesvolle \texttt{POST} requests geven \texttt{201} en de aangemaakte resource in de response body (aanbevolen), of \texttt{204} zonder response body, of \texttt{202} als de request asynchroon verwerkt wordt.
+        \item Als de \texttt{POST} idempotent is, geef dan \texttt{201} als de resource is aangemaakt, en \texttt{200} of \texttt{204} als de resource reeds bestond.
+        \item Bij het aanmaken van meerdere resources, geef \texttt{201} als alle resources succesvol zijn aangemaakt, of \texttt{207} als een deel van de resources niet kon worden aangemaakt.
+    \end{itemize}
+    \item \texttt{PUT}: Voor het volledig bijwerken van een resource.
+    \begin{itemize}
+        \item \texttt{PUT} requests moeten idempotent zijn.
+        \item Succesvolle \texttt{PUT} requests geven \texttt{200} of \texttt{204} (zonder response body), of \texttt{201} als de resource nog niet bestond (creatie via PUT wordt afgeraden voor top-level resources).
+        \item \texttt{PUT} requests mogen de resource impliciet aanmaken als deze nog niet bestaat, tenzij de client de volledige controle heeft over de resource ID.
+    \end{itemize}
+    \item \texttt{PATCH}: Voor het gedeeltelijk bijwerken van een resource.
+    \begin{itemize}
+        \item Succesvolle \texttt{PATCH} requests geven \texttt{200} of \texttt{204} (zonder response body).
+    \end{itemize}
+    \item \texttt{DELETE}: Voor het verwijderen van een resource.
+    \begin{itemize}
+        \item Succesvolle \texttt{DELETE} requests geven \texttt{200} of \texttt{204} (zonder response body).
+    \end{itemize}
+\end{itemize}
+
+\subsection{De API mag \texttt{GET} requests met een body payload accepteren}
+\label{subsection:get_met_body}
+
+Als een \texttt{GET} request een te lange query string zou genereren, mag de API een \texttt{POST} request accepteren met de query parameters in de request body. Documenteer dit duidelijk in de OpenAPI-specificatie met een opmerking zoals:
+
+\begin{minted}{yaml}
+paths:
+  /products:
+    post:
+      description: |
+        [GET with body payload] - Returns all products matching the query passed
+        as request input payload.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              # ... definitie van de query parameters ...
+\end{minted}
+
+\subsection{De API zou \texttt{POST} requests idempotent moeten maken}
+\label{subsection:idempotente_post}
+
+\texttt{POST} requests zouden idempotent moeten zijn om te voorkomen dat er per ongeluk dubbele resources worden aangemaakt. Dit kan bijvoorbeeld door een unieke \texttt{request\_id} mee te geven in de request body of header, die de server kan gebruiken om te controleren of de request al eerder is verwerkt. Zie ook secties \ref{subsection:idempotente_post_patch} en \ref{subsection:secondary_key_idempotent_post}.
+
+\subsection{De API mag \texttt{PUT} requests gebruiken voor het aanmaken van resources als de client de volledige controle heeft over de resource ID}
+\label{subsection:put_voor_creatie}
+
+\texttt{PUT} requests mogen gebruikt worden voor het aanmaken van resources als de client de volledige controle heeft over de resource ID en alle resource attributen. In dit geval is \texttt{PUT} idempotent en kan de client de resource ID als URL path parameter meegeven.
+
+\subsection{De API moet \texttt{PATCH} verzoeken gebruiken voor gedeeltelijke updates}
+\label{subsection:patch_requests}
+
+Gebruik \texttt{PATCH} requests om delen van een resource bij te werken. De set wijzigingen wordt meegegeven in een patch document in de request body. De API specificatie moet het formaat van dit document definiëren. Kies één van de volgende patronen per endpoint, bij voorkeur in deze volgorde:
+
+\begin{enumerate}
+    \item Gebruik \texttt{PUT} met complete objecten zolang dit mogelijk is (dus geen \texttt{PATCH}).
+    \item Gebruik \texttt{PATCH} met JSON Merge Patch (\texttt{application/merge-patch+json}).
+    \item Gebruik \texttt{PATCH} met JSON Patch (\texttt{application/json-patch+json}).
+    \item Gebruik \texttt{POST} (met een duidelijke beschrijving) als \texttt{PATCH} niet geschikt is.
+\end{enumerate}
+
+JSON Merge Patch kan te beperkt zijn voor complexe updates. JSON Patch is dan een krachtiger alternatief.
+
+\texttt{PATCH} requests zijn meestal niet robuust tegen niet-bestaande resources en geven dan een \texttt{404 Not Found} error. Succesvolle \texttt{PATCH} requests geven \texttt{200 OK} of \texttt{204 No Content}, of \texttt{202 Accepted} voor asynchrone verwerking. \texttt{PATCH} requests zouden idempotent moeten zijn (zie sectie \ref{subsection:idempotente_post_patch}).
+
+\subsection{De API moet \texttt{DELETE} verzoeken gebruiken voor het verwijderen van resources}
+\label{subsection:delete_requests}
+
+Gebruik \texttt{DELETE} requests om resources te verwijderen. \texttt{DELETE} requests worden meestal toegepast op individuele resources, niet op collecties. Een succesvolle \texttt{DELETE} request geeft \texttt{200 OK}, \texttt{204 No Content}, of \texttt{202 Accepted} (voor asynchrone verwerking). Een \texttt{GET} request na een succesvolle \texttt{DELETE} request moet \texttt{404 Not Found} of \texttt{410 Gone} teruggeven.
+
+\texttt{DELETE} requests kunnen query parameters gebruiken om meerdere resources tegelijk te verwijderen. Documenteer het gedrag bij (gedeeltelijke) fouten duidelijk. In geval van een \texttt{DELETE} met query parameters, mag je \texttt{207 Multi-Status} gebruiken met een payload die de resultaten beschrijft.
+
+Als een \texttt{DELETE} request extra informatie nodig heeft die niet als filter parameter kan worden geclassificeerd, gebruik dan een \texttt{POST} request met de extra informatie in de request body, zoals beschreven in sectie \ref{subsection:get_met_body} (maar dan met \texttt{DELETE} with body).
+
+\subsection{De API moet \texttt{HEAD} requests ondersteunen}
+\label{subsection:head_requests}
+
+\texttt{HEAD} requests hebben dezelfde semantiek als \texttt{GET} requests, maar geven enkel de headers terug, zonder body. Dit is handig om te controleren of een resource is gewijzigd, zonder de volledige resource te downloaden.
+
+\subsection{De API moet \texttt{OPTIONS} requests ondersteunen}
+\label{subsection:options_requests}
+
+\texttt{OPTIONS} requests worden gebruikt om te bepalen welke HTTP-methoden beschikbaar zijn voor een bepaald endpoint. De response bevat een komma-gescheiden lijst van methoden in de \texttt{Allow} header, of een gestructureerde lijst van link templates.
+
+\subsection{De API moet algemene methode-eigenschappen volgen}
+\label{subsection:algemene_methode_eigenschappen}
+
+HTTP-methoden hebben de volgende eigenschappen \autocite{rfc9110}
+
+\begin{itemize}
+    \item \textbf{Safe}: De methode mag geen bijwerkingen hebben op de server.
+    \item \textbf{Idempotent}: Herhaaldelijke uitvoering van de methode heeft hetzelfde effect als één enkele uitvoering.
+    \item \textbf{Cacheable}: De response van de methode mag gecached worden.
+\end{itemize}
+
+De volgende tabel geeft een overzicht van de eigenschappen per methode:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|c|c|c|}
+\hline
+Methode & Safe & Idempotent & Cacheable \\
+\hline
+GET     & Ja  & Ja  & Ja  \\
+HEAD    & Ja  & Ja  & Ja  \\
+POST    & Nee & Nee (maar zou idempotent moeten zijn) & Misschien (enkel als safe) \\
+PUT     & Nee & Ja  & Nee \\
+PATCH   & Nee & Nee (maar zou idempotent moeten zijn) & Nee \\
+DELETE  & Nee & Ja  & Nee \\
+OPTIONS & Ja  & Ja  & Nee \\
+TRACE   & Ja  & Ja  & Nee \\
+\hline
+\end{tabular}
+\caption{Eigenschappen van HTTP-methoden}
+\label{tab:http_method_properties}
+\end{table}
+
+Cacheable \texttt{GET}, \texttt{HEAD}, en \texttt{POST} endpoints moeten gedocumenteerd worden (zie sectie \ref{subsection:caching}).
+
+\subsection{De API zou \texttt{POST} en \texttt{PATCH} idempotent moeten maken}
+\label{subsection:idempotente_post_patch}
+
+\texttt{POST} en \texttt{PATCH} requests zouden idempotent moeten zijn om conflicten te vermijden en dubbele resources of verloren updates te voorkomen. Overweeg één van de volgende patronen:
+
+\begin{enumerate}
+  \item Een resource-specifieke conditionele key via de \texttt{If-Match} header (zie sectie \ref{subsection:etag_header}).
+  \item Een resource-specifieke secondary key in de request body (zie sectie \ref{subsection:secondary_key_idempotent_post}).
+  \item Een client-specifieke idempotency key via de \texttt{Idempotency-Key} header (zie sectie \ref{subsection:idempotency_key_header}).
+\end{enumerate}
+
+Raadpleeg de volgende tabel om te bepalen welk patroon het meest geschikt is:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|c|c|c|}
+\hline
+Eigenschap & Conditional Key & Secondary Key & Idempotency Key \\
+\hline
+Methode                    & POST/PATCH      & POST           & POST/PATCH      \\
+HTTP Standaard             & Ja             & Nee            & Nee            \\
+Voorkomt dubbele resources & Ja             & Ja             & Nee            \\
+Voorkomt verloren updates  & Ja             & Nee            & Nee            \\
+Ondersteunt safe retries   & Ja             & Ja             & Ja             \\
+Zelfde response            & Nee            & Nee            & Ja             \\
+Inspecteerbaar             & Ja             & Nee            & Ja             \\
+Zonder \texttt{GET}       & Nee            & Ja             & Ja             \\
+\hline
+\end{tabular}
+\caption{Vergelijking van idempotency patronen}
+\label{tab:idempotency_patterns}
+\end{table}
+
+Als safe retries de belangrijkste eis is, gebruik dan de conditional key of secondary key. Een succesvolle idempotente \texttt{POST} of \texttt{PATCH} geeft \texttt{200 OK}, \texttt{204 No Content} (als de resource is bijgewerkt), of \texttt{201 Created} (als de resource is aangemaakt).
+
+\subsection{De API zou een secondary key moeten gebruiken voor idempotente \texttt{POST} requests}
+\label{subsection:secondary_key_idempotent_post}
+
+Om idempotente \texttt{POST} requests te ontwerpen, zou de API een secondary key in de request body moeten gebruiken. Deze secondary key wordt permanent opgeslagen in de resource en moet uniek zijn. Een goede kandidaat is een foreign key die verwijst naar een gerelateerde resource.
+
+Als je de secondary key gebruikt zonder \texttt{Idempotency-Key}, moeten alle volgende retries falen met \texttt{409 Conflict}. Vermijd \texttt{200 OK} tenzij de geretourneerde resource de originele resource is.
+
+\subsection{De API moet het collectieformaat voor header en query parameters definiëren}
+\label{subsection:collectieformaat_parameters}
+
+Voor header en query parameters die meerdere waarden kunnen bevatten, moet de API het collectieformaat expliciet definiëren in de OpenAPI-specificatie. Gebruik komma-gescheiden waarden (style: simple, explode: false) voor headers en voor query parameters als de tools en maximale URL-lengte dit toelaten. Als dit niet het geval is, gebruik dan multiple parameters (style: form, explode: true).
+
+\subsection{De API zou eenvoudige querytalen moeten gebruiken met query parameters}
+\label{subsection:eenvoudige_querytalen}
+
+Gebruik bij voorkeur query parameters voor resource-specifieke querytalen. Een eenvoudige querytaal bestaat uit één of meerdere naam-waardeparen, gecombineerd met ``en''-semantiek. Specificeer de volgende aspecten van query parameters:
+
+\begin{itemize}
+    \item Verwijzing naar corresponderende property.
+    \item Waardenbereik (inclusief/exclusief).
+    \item Vergelijkingsemantiek (gelijk aan, kleiner dan, groter dan, etc.).
+    \item Implicaties bij combinatie met andere queries (``en''/``of'').
+\end{itemize}
+
+Enkele voorbeelden van eenvoudige querytalen:
+
+\begin{itemize}
+    \item Gelijk aan: \texttt{name=BrightAnalytics}, \texttt{year=2024}.
+    \item Kleiner dan: \texttt{max\_length=255}, \texttt{created\_before=2024-12-31}.
+    \item Groter dan: \texttt{min\_length=1}, \texttt{created\_after=2024-01-01}.
+    \item Meerdere waarden: \texttt{color=red,green,blue} (of \texttt{filters=\{"color": ["red", "green", "blue"]\}}).
+    \item Paginering: \texttt{page=2\&per\_page=20} (zie sectie \ref{subsection:paginering}).
+\end{itemize}
+
+Voor interne API's of specifieke use cases mag je complexere querytalen gebruiken, maar documenteer deze duidelijk. Zie sectie \ref{subsection:standaard_query_parameters} voor standaard query parameters voor paginering en sortering.
+
+\subsection{De API moet complexe querytalen met JSON gebruiken indien nodig}
+\label{subsection:complexe_querytalen}
+
+Voor complexere query's met veel filters, dynamische filters, of vrije keuze van operatoren, moet de API geneste JSON datastructuren gebruiken in de request body (via \texttt{GET} with body, zie sectie \ref{subsection:get_met_body}). Definieer deze structuren in de OpenAPI-specificatie. Dit biedt voordelen voor zowel clients als servers, en zorgt voor consistentie met andere HTTP-methoden. Laat je inspireren door Elastic Search Query DSL of GraphQL Queries.
+
+\subsection{De API moet impliciete filtering documenteren}
+\label{subsection:impliciete_filtering}
+
+Als een collectie of resource impliciet gefilterd wordt (bijvoorbeeld op basis van autorisatie), moet dit gedocumenteerd worden in de OpenAPI-specificatie. Houd rekening met caching aspecten bij impliciete filtering (zie sectie \ref{subsection:caching}).
+
+\section{REST - HTTP Status Codes}
+
+\subsection{De API moet officiële HTTP status codes gebruiken}
+\label{subsection:officiele_http_status_codes}
+
+Gebruik enkel officiële HTTP status codes, consistent met hun betekenis zoals gedefinieerd in de RFC standaarden en geregistreerd in de IANA Status Code Registry.
+
+\subsection{De API moet succes- en foutresponses specificeren}
+\label{subsection:succes_en_foutresponses}
+
+Definieer alle succes- en foutresponses in de OpenAPI-specificatie. Foutbeschrijvingen moeten informatie bevatten over de specifieke oorzaken van de fout. Standaard client- en serverfouten (zoals \texttt{401}, \texttt{403}, \texttt{404}, \texttt{500}, \texttt{503}) hoeven niet individueel gedefinieerd te worden, tenzij er endpoint-specifieke informatie is.
+
+\subsection{De API zou enkel de meest voorkomende HTTP status codes moeten gebruiken}
+\label{subsection:meest_voorkomende_http_status_codes}
+
+Gebruik bij voorkeur de meest voorkomende HTTP status codes. Documenteer enkel afwijkingen van de standaard semantische betekenis of als de status code niet in de onderstaande lijst staat.
+
+\paragraph{Succes Codes}
+
+\begin{itemize}
+    \item \texttt{200 OK}: Algemeen succes.
+    \item \texttt{201 Created}: Resource aangemaakt.
+    \item \texttt{202 Accepted}: Request geaccepteerd voor asynchrone verwerking.
+    \item \texttt{204 No Content}: Succes, geen response body.
+    \item \texttt{207 Multi-Status}: Resultaat van batch/bulk requests.
+\end{itemize}
+
+\paragraph{Redirection Codes (niet gebruiken, zie sectie \ref{subsection:geen_redirects})}
+
+\begin{itemize}
+    \item \texttt{301 Moved Permanently}
+    \item \texttt{302 Found}
+    \item \texttt{303 See Other}
+    \item \texttt{304 Not Modified}: Resource niet gewijzigd (voor conditionele \texttt{GET} en \texttt{HEAD}).
+    \item \texttt{307 Temporary Redirect}
+    \item \texttt{308 Permanent Redirect}
+\end{itemize}
+
+\paragraph{Client Error Codes}
+
+\begin{itemize}
+    \item \texttt{400 Bad Request}: Algemene client error voor als de request niet correct is.
+    \item \texttt{401 Unauthorized}: Niet geauthenticeerd.
+    \item \texttt{403 Forbidden}: Niet geautoriseerd.
+    \item \texttt{404 Not Found}: Resource niet gevonden.
+    \item \texttt{405 Method Not Allowed}: Methode niet toegestaan.
+    \item \texttt{406 Not Acceptable}: Content type niet geaccepteerd.
+    \item \texttt{409 Conflict}: Conflict met huidige status van de resource.
+    \item \texttt{411 Length Required}: \texttt{Content-Length} header vereist.
+    \item \texttt{412 Precondition Failed}: Voorwaarde mislukt (optimistic locking, zie sectie \ref{subsection:etag_header}).
+    \item \texttt{415 Unsupported Media Type}: Content type niet ondersteund.
+    \item \texttt{422 Unprocessable Entity}: Validatiefouten in request.
+    \item \texttt{423 Locked}: Pessimistic locking (gebruik liever optimistic locking).
+    \item \texttt{428 Precondition Required}: Conditionele request vereist (zie sectie \ref{subsection:etag_header}).
+    \item \texttt{429 Too Many Requests}: Rate limit overschreden.
+\end{itemize}
+
+\paragraph{Server Error Codes}
+
+\begin{itemize}
+    \item \texttt{500 Internal Server Error}: Algemene server error.
+    \item \texttt{501 Not Implemented}: Endpoint niet geïmplementeerd.
+    \item \texttt{502 Bad Gateway}: Invalide response van inbound server.
+    \item \texttt{503 Service Unavailable}: Service niet beschikbaar.
+    \item \texttt{504 Gateway Timeout}: Timeout van inbound server.
+    \item \texttt{507 Insufficient Storage}: Onvoldoende opslagruimte.
+\end{itemize}
+
+\subsection{De API moet de meest specifieke HTTP status code gebruiken}
+\label{subsection:meest_specifieke_http_status_code}
+
+Gebruik altijd de meest specifieke HTTP status code die van toepassing is.
+
+\subsection{De API moet geen stack traces tonen}
+\label{subsection:geen_stack_traces}
+
+Stack traces bevatten implementatiedetails en mogelijk gevoelige informatie. De API mag geen stack traces tonen in responses.
+
+\subsection{De API zou geen redirection codes moeten gebruiken}
+\label{subsection:geen_redirects}
+
+Gebruik geen redirection codes (behalve \texttt{304 Not Modified}). Wijzig clients of redirect verkeer achter de API layer. Voor idempotente \texttt{POST} requests, gebruik \texttt{200 OK} met de \texttt{Location} header als de resource al bestaat. Voor niet-idempotente \texttt{POST} requests, gebruik \texttt{409 Conflict} als de resource al bestaat.
+
+\section{REST - HTTP Headers}
+
+\subsection{De API mag standaard headers gebruiken}
+\label{subsection:standaard_headers}
+
+De API mag standaard HTTP headers gebruiken, zoals gedefinieerd in de RFC's. De ondersteunde headers moeten expliciet vermeld worden in de OpenAPI-specificatie. Gebruik de standaard header definities uit de guidelines waar mogelijk:
+
+\begin{minted}{yaml}
+components:
+  parameters:
+    ETag:
+      $ref: 'https://opensource.zalando.com/restful-api-guidelines/models/headers-1.0.0.yaml#/ETag'
+\end{minted}
+
+\subsection{De API zou \texttt{kebab-case} moeten gebruiken voor HTTP headers}
+\label{subsection:kebab_case_headers}
+
+Gebruik \texttt{kebab-case} (alle woorden in kleine letters, gescheiden door koppeltekens) voor HTTP headers. Bijvoorbeeld: \texttt{if-modified-since}, \texttt{content-type}. Afkortingen zoals \texttt{ID} mogen in hoofdletters.
+
+\subsection{De API moet \texttt{Content-\*} headers correct gebruiken}
+\label{subsection:content_headers}
+
+Gebruik \texttt{Content-\*} headers volgens hun standaard betekenis. Enkele belangrijke headers:
+
+\begin{itemize}
+    \item \texttt{Content-Type}: Het media type van de body content (bijv. \texttt{application/json}).
+    \item \texttt{Content-Encoding}: Compressie of encryptie algoritmes (bijv. \texttt{gzip}, \texttt{deflate}).
+    \item \texttt{Content-Length}: De lengte van de content in bytes.
+    \item \texttt{Content-Language}: De taal van de content (bijv. \texttt{en-US}).
+    \item \texttt{Content-Location}: De alternatieve locatie van de resource (zie sectie \ref{subsection:content_location}).
+    \item \texttt{Content-Range}: Voor range requests (gedeeltelijke responses).
+    \item \texttt{Content-Disposition}: Suggestie voor bestandsnaam bij downloaden.
+\end{itemize}
+
+\subsection{De API zou de \texttt{Location} header moeten gebruiken in plaats van \texttt{Content-Location}}
+\label{subsection:location_header}
+
+Gebruik bij voorkeur de \texttt{Location} header om de locatie van een resource aan te geven, in plaats van \texttt{Content-Location}. Dit is eenvoudiger en voorkomt mogelijke problemen met caching.
+
+\subsection{De API mag de \texttt{Content-Location} header gebruiken}
+\label{subsection:content_location}
+
+De \texttt{Content-Location} header mag gebruikt worden in succesvolle write (\texttt{PUT}, \texttt{POST}, \texttt{PATCH}) en read (\texttt{GET}, \texttt{HEAD}) operaties om de locatie van de resource in de response body aan te geven. Dit is nuttig bij content negotiation of status reports.
+
+\subsection{De API mag de \texttt{Prefer} header ondersteunen}
+\label{subsection:prefer_header}
+
+De \texttt{Prefer} header (\autocite{rfc7240}) mag gebruikt worden om de gewenste verwerking door de server aan te geven. Enkele mogelijke preferences:
+
+\begin{itemize}
+    \item \texttt{respond-async}: Asynchrone response (\texttt{202 Accepted}).
+    \item \texttt{return=minimal}: Geen resource in response body (\texttt{204 No Content}).
+    \item \texttt{return=representation}: Resource in response body (\texttt{200 OK} of \texttt{201 Created}).
+    \item \texttt{wait=<seconds>}: Maximale verwerkingstijd.
+    \item \texttt{handling=strict}: Strikte foutafhandeling.
+    \item \texttt{handling=lenient}: Leniente foutafhandeling.
+\end{itemize}
+
+Definieer de ondersteunde preferences in de OpenAPI-specificatie. Retourneer de \texttt{Preference-Applied} header om aan te geven welke preference is toegepast.
+
+\subsection{De API mag de \texttt{ETag} header met \texttt{If-Match}/\texttt{If-None-Match} ondersteunen}
+\label{subsection:etag_header}
+
+Gebruik de \texttt{ETag} header (\autocite{rfc9110}) met \texttt{If-Match} of \texttt{If-None-Match} voor optimistic locking. De \texttt{ETag} is een hash of versie van de resource. \texttt{If-Match} controleert of de resource versie overeenkomt. \texttt{If-None-Match} controleert of de resource versie \textit{niet} overeenkomt (nuttig bij creatie). Gebruik \texttt{412 Precondition Failed} als de voorwaarde faalt. Definieer de headers in de OpenAPI-specificatie.
+
+\subsection{De API mag de \texttt{Idempotency-Key} header ondersteunen}
+\label{subsection:idempotency_key_header}
+
+De \texttt{Idempotency-Key} header mag gebruikt worden om idempotente requests te garanderen, zelfs bij retries. De client genereert een unieke key. De server slaat de key en response op in een cache. Bij herhaalde requests met dezelfde key retourneert de server de gecachte response. Definieer de header in de OpenAPI-specificatie en vermeld de expiratietijd (bijv. 24 uur). De key cache is geen request log en moet een beperkte levensduur hebben.
+
+\section{REST - Hypermedia}
+
+\subsection{De API moet REST maturity level 2 gebruiken}
+\label{subsection:maturity_level_2}
+
+De API moet voldoen aan REST maturity level 2. Dit betekent dat de API resource-georiënteerd is en correct gebruik maakt van HTTP methods en status codes. Dit impliceert onder andere:
+
+\begin{itemize}
+  \item Vermijd acties, denk in resources (zie sectie \ref{section:vermijd_acties}).
+  \item Gebruik geen werkwoorden in URL's (zie sectie \ref{section:geen_werkwoorden_urls}).
+  \item Gebruik HTTP methods correct (zie sectie \ref{subsection:correct_gebruik_http_methoden}).
+  \item Gebruik enkel de meest voorkomende HTTP status codes (zie sectie \ref{subsection:meest_voorkomende_http_status_codes}).
+\end{itemize}
+
+Hoewel dit geen HATEOAS is, sluit het het gebruik van links niet uit.
+
+\subsection{De API moet standaard hypertext controls gebruiken}
+\label{subsection:hypertext_controls}
+
+Voor links naar andere resources, moet de API het volgende object gebruiken:
+
+\begin{minted}{yaml}
+HttpLink:
+  description: Link to a resource.
+  type: object
+  properties:
+    href:
+      description: The URL of the linked resource.
+      type: string
+      format: uri
+  required:
+    - href
+\end{minted}
+
+De attribuutnaam die dit object bevat, specificeert de relatie tussen de huidige resource en de gelinkte resource. Gebruik, indien mogelijk, namen uit de IANA Link Relation Registry. Vervang koppeltekens in IANA namen door underscores. Links mogen overal in een JSON model voorkomen. HAL wordt niet aanbevolen.
+
+\subsection{De API zou eenvoudige hypertext controls moeten gebruiken voor paginering en self-references}
+\label{subsection:eenvoudige_hypertext_controls}
+
+Voor paginering en self-references, gebruik een vereenvoudigde vorm: een URI waarde met de corresponderende link relation (\texttt{next}, \texttt{prev}, \texttt{first}, \texttt{last}, \texttt{self}). Zie sectie \ref{subsection:paginering_links} voor meer informatie en voorbeelden.
+
+\subsection{De API moet volledige, absolute URI's gebruiken}
+\label{subsection:absolute_uris}
+
+Gebruik altijd volledige, absolute URI's voor links naar andere resources. Vermijd relatieve URI's.
+
+\subsection{De API mag geen link headers gebruiken met JSON entities}
+\label{subsection:geen_link_headers}
+
+Gebruik geen \texttt{Link} headers \autocite{rfc8288} met JSON. Embed links direct in de JSON payload (zie sectie \ref{subsection:hypertext_controls}).
+
+\section{REST - Performance}
+
+\subsection{De API zou bandbreedte en responsetijd moeten optimaliseren}
+\label{subsection:bandbreedte_responsetijd}
+
+De API zou technieken moeten ondersteunen om de bandbreedte te verminderen en de responsetijd te verbeteren, vooral voor API's met grote payloads of veel verkeer. Mogelijke technieken zijn:
+
+\begin{itemize}
+    \item Filtering van velden (zie sectie \ref{subsection:partial_responses}).
+    \item \texttt{ETag} en \texttt{If-Match}/\texttt{If-None-Match} headers (zie sectie \ref{subsection:etag_header}).
+    \item \texttt{Prefer} header met \texttt{return=minimal} of \texttt{respond-async} (zie sectie \ref{subsection:prefer_header}).
+    \item Paginering (zie sectie \ref{subsection:paginering}).
+    \item Caching (zie sectie \ref{subsection:caching}).
+\end{itemize}
+
+\subsection{De API zou partial responses via filtering moeten ondersteunen}
+\label{subsection:partial_responses}
+
+Gebruik de \texttt{fields} query parameter om clients toe te staan enkel de gewenste velden op te vragen. Dit vermindert de bandbreedte en verbetert de performance. Documenteer de \texttt{fields} parameter in de OpenAPI-specificatie en verwijs naar de specificatie voor de syntax. Voorbeeld: \texttt{/users/123?fields=(name,email)}.
+
+\subsection{De API zou optionele embedding van sub-resources moeten toelaten}
+\label{subsection:embedding_subresources}
+
+Gebruik de \texttt{embed} query parameter om clients toe te staan gerelateerde resources te embedden in de response. Dit vermindert het aantal requests. Gebruik de syntax specificatie van sectie \ref{subsection:partial_responses} voor de \texttt{embed} parameter. Voorbeeld: \texttt{/orders/123?embed=(order\_items)}.
+
+\subsection{De API moet cacheable \texttt{GET}, \texttt{HEAD}, en \texttt{POST} endpoints documenteren}
+\label{subsection:caching}
+
+Als een endpoint cacheable is, moet dit gedocumenteerd worden in de OpenAPI-specificatie door de \texttt{Cache-Control}, \texttt{Vary}, en \texttt{ETag} headers in de response te definiëren. Gebruik geen \texttt{Expires} header. Standaard zouden servers en clients \texttt{Cache-Control: no-store} moeten gebruiken. Als caching vereist is, zorg dan voor:
+
+\begin{itemize}
+    \item Documentatie van cacheable endpoints.
+    \item Correcte caching boundaries (time-to-live, cache constraints) via \texttt{Cache-Control} en \texttt{Vary}.
+    \item Efficiënte methoden voor cache warming en updates.
+\end{itemize}
+
+Gebruik de standaard header definities uit de guidelines waar mogelijk.
+
+\paragraph{Cache Support Patterns}
+
+\begin{itemize}
+    \item Gebruik \texttt{ETag} met \texttt{If-Match}/\texttt{If-None-Match} voor alle cacheable endpoints.
+    \item Gebruik \texttt{HEAD} of \texttt{GET} met \texttt{If-None-Match} om updates te detecteren.
+    \item Voor kleine datasets: \texttt{GET} op de volledige collectie met \texttt{ETag}.
+    \item Voor middelgrote datasets: \texttt{GET} op de volledige collectie met \texttt{ETag} en paginering, en filtering op \texttt{ETag} om enkel wijzigingen op te vragen.
+\end{itemize}
+
+Retourneer \texttt{304 Not Modified} bij een \texttt{HEAD} of \texttt{GET} request met \texttt{If-None-Match} die faalt, in plaats van \texttt{412 Precondition Failed}.
+
+
+\paragraph{Default Header Values}
+
+\begin{itemize}
+    \item \texttt{Cache-Control}: \texttt{private, must-revalidate, max-age=<seconds>}.
+    \item \texttt{Vary}: \texttt{accept, accept-encoding}.
+\end{itemize}
+
+\paragraph{Caching Strategy}
+
+Gebruik bij voorkeur een (gedistribueerde) cache direct gekoppeld aan de service of gateway layer. Dit vereenvoudigt caching aanzienlijk. Raadpleeg \autocite{rfc9111} voor meer informatie.
+
+\section{REST - Paginering}
+\label{subsection:paginering}
+
+\subsection{De API moet paginering ondersteunen}
+\label{subsection:paginering_ondersteunen}
+
+De API moet paginering ondersteunen voor collecties die potentieel groot kunnen zijn. Dit beschermt de service tegen overload en verbetert de client-side ervaring. We gebruiken offset-based paginering, met de \texttt{page} en \texttt{per\_page} query parameters.
+
+Gebruik de standaard query parameter namen (zie sectie \ref{subsection:standaard_query_parameters}).
+
+\subsection{De API zou een pagination response page object moeten gebruiken}
+\label{subsection:paginering_response_object}
+
+Definieer voor je project een standaard pagination response object in de OpenAPI-specificatie. Dit object bevat links naar de huidige, eerste, vorige, volgende, en laatste pagina, de query parameters, de items van de huidige pagina, en metadata zoals het totaal aantal resultaten. Dit is de definitie van een Laravel \texttt{LengthAwarePaginator} object:
+
+\begin{minted}{yaml}
+ResponsePage:
+  type: object
+  required:
+    - items
+  properties:
+    data:
+      type: array
+    meta:
+        type: object
+        properties:
+            current_page:
+                type: integer
+            from:
+                type: integer
+            last_page:
+                type: integer
+            links:
+                type: array
+                items:
+                    type: object
+                    properties:
+                        url:
+                            type: string
+                        label:
+                            type: string
+                        active:
+                            type: boolean
+            path:
+                type: string
+            per_page:
+                type: integer
+            to:
+                type: integer
+            total:
+                type: integer
+    links:
+        type: object
+        properties:
+            first:
+                type: string
+            prev:
+                type: string
+            next:
+                type: string
+            last:
+                type: string
+\end{minted}
+
+De \texttt{data} array bevat de resources van de huidige pagina. De \texttt{meta} object bevat metadata over de paginering. De \texttt{links} object bevat links naar de eerste, vorige, volgende, en laatste pagina.
+
+\subsection{De API zou pagination links moeten gebruiken}
+\label{subsection:paginering_links}
+
+Gebruik links voor paginering:
+
+\begin{minted}{json}
+{
+    "data": [],
+    "meta": {
+        "current_page": 1,
+        "from": 1,
+        "last_page": 5,
+        "links": [
+            {"url": "/orders?page=1", "label": "1", "active": true},
+            {"url": "/orders?page=2", "label": "2", "active": false},
+            {"url": "/orders?page=3", "label": "3", "active": false},
+            {"url": "/orders?page=4", "label": "4", "active": false},
+            {"url": "/orders?page=5", "label": "5", "active": false}
+        ],
+        "path": "/orders",
+        "per_page": 10,
+        "to": 10,
+        "total": 50
+    },
+    "links": {
+        "first": "/orders?page=1",
+        "prev": null,
+        "next": "/orders?page=2",
+        "last": "/orders?page=5"
+    }
+}
+\end{minted}
+
+\section{REST - Compatibiliteit}
+
+\subsection{De API mag geen backward compatibility breken}
+\label{subsection:backward_compatibility}
+
+Wijzigingen aan de API mogen geen bestaande clients breken. Gebruik compatibele extensies (zie sectie \ref{subsection:compatible_extensions}) of introduceer nieuwe API versies (zie sectie \ref{subsection:versionering}). Compatibele API extensies hebben de voorkeur. Compatibiliteit geldt enkel voor het "on the wire" formaat, niet voor gegenereerde code.
+
+\subsection{De API zou compatibele extensies moeten verkiezen}
+\label{subsection:compatible_extensions}
+
+Om de API backward compatible te houden, volg deze regels:
+
+\begin{itemize}
+    \item Voeg enkel optionele velden toe, geen verplichte.
+    \item Wijzig nooit de semantiek van velden.
+    \item Maak validatieregels niet strenger. Documenteer alle constraints duidelijk.
+    \item Enum ranges mogen enkel verkleind worden voor input parameters als de server oude waarden nog accepteert. Voor output parameters mogen enum ranges verkleind worden.
+    \item Enum ranges mogen niet uitgebreid worden voor output parameters. Voor input parameters mogen enum ranges uitgebreid worden.
+    \item Gebruik \texttt{x-extensible-enum} voor output parameters die waarschijnlijk uitgebreid zullen worden (zie sectie \ref{subsection:open_ended_enums}). Update de API definitie voor nieuwe waarden worden geretourneerd.
+\end{itemize}
+
+\subsection{De API zou conservatief ontworpen moeten worden}
+\label{subsection:conservatief_ontwerp}
+
+Ontwerp de API conservatief:
+
+\begin{itemize}
+    \item Negeer geen onbekende input velden. Retourneer een \texttt{422 Unprocessable Entity} error. Als onbekende velden toch verwerkt worden, documenteer dit dan duidelijk voor \texttt{PUT}, \texttt{POST}, en \texttt{PATCH} requests.
+    \item Definieer input constraints (formaten, ranges, lengtes, etc.) nauwkeurig en retourneer specifieke foutmeldingen bij overtredingen.
+    \item Wees liever specifiek en restrictief (indien mogelijk).
+\end{itemize}
+
+Het negeren van onbekende input velden wordt afgeraden. Dit kan leiden tot problemen bij toekomstige uitbreidingen en maakt het moeilijker om client errors te detecteren. Voor \texttt{PUT} requests is het negeren van onbekende velden niet toegestaan vanwege de "replace" semantiek.
+
+\subsection{Clients moeten voorbereid zijn op compatibele API extensies}
+\label{subsection:client_compatibiliteit}
+
+Clients moeten robuust zijn en het robustness principle volgen:
+
+\begin{itemize}
+    \item Wees conservatief met requests en input data.
+    \item Wees tolerant bij het verwerken van response data:
+    \item Negeer onbekende velden in de payload.
+    \item Wees voorbereid op nieuwe waarden in \texttt{x-extensible-enum} parameters (zie sectie \ref{subsection:open_ended_enums}).
+    \item Wees voorbereid op ongedocumenteerde HTTP status codes.
+    \item Volg redirects (\texttt{301 Moved Permanently}).
+\end{itemize}
+
+\subsection{De API moet OpenAPI-specificaties als open voor extensie beschouwen}
+\label{subsection:openapi_extensie}
+
+OpenAPI object definities worden standaard beschouwd als open voor extensie. Dit betekent dat:
+
+\begin{itemize}
+    \item Clients moeten onbekende velden in responses negeren.
+    \item Servers zouden requests met onbekende velden moeten afwijzen (\texttt{400 Bad Request}). Als de server onbekende velden toch verwerkt, documenteer dit dan duidelijk voor \texttt{PUT}, \texttt{POST}, en \texttt{PATCH} requests.
+    \item OpenAPI definities mogen niet \texttt{additionalProperties: false} declareren.
+\end{itemize}
+
+Dit bevordert compatibiliteit en maakt het mogelijk om de API te evolueren zonder clients te breken.
+
+\subsection{De API zou versionering moeten vermijden}
+\label{subsection:versionering}
+
+Vermijd versionering van de API indien mogelijk. Meerdere versies maken de API complexer. Als een niet-compatibele wijziging nodig is, overweeg dan:
+
+\begin{enumerate}
+    \item Een nieuwe resource (variant) aanmaken.
+    \item Een nieuw endpoint aanmaken (nieuwe applicatie met nieuwe API).
+    \item Een nieuwe API versie aanmaken (parallel met de oude versie).
+\end{enumerate}
+
+De eerste twee opties hebben de voorkeur.
+
+\subsection{De API moet media type versioning gebruiken}
+\label{subsection:media_type_versioning}
+
+Als versionering toch nodig is, gebruik dan media type versioning. Voeg de versie toe aan de \texttt{Content-Type} header. Bijvoorbeeld: \texttt{application/vnd.brighteats.v2+json}. Gebruik geen URL versioning (zie sectie \ref{subsection:geen_url_versioning}). Media type versioning is flexibeler en ondersteunt content negotiation. Voeg \texttt{Content-Type} toe aan de \texttt{Vary} header voor caching. Blijf bij \texttt{application/json} zonder versioning zolang er geen incompatibele wijzigingen zijn.
+
+\subsection{De API mag geen URL versioning gebruiken}
+\label{subsection:geen_url_versioning}
+
+Gebruik geen URL versioning (bijv. \texttt{/v1/users}). Dit maakt de API complexer en bemoeilijkt hypermedia en versiebeheer.
+
+\subsection{De API moet altijd JSON objecten retourneren als top-level datastructuur}
+\label{subsection:json_object_top_level}
+
+Retourneer altijd een JSON object (geen array of map) als top-level datastructuur. Dit ondersteunt toekomstige uitbreidingen zonder backward compatibility te breken.
+
+\subsection{De API zou open-ended lijsten (\texttt{x-extensible-enum}) moeten gebruiken voor enumeraties}
+\label{subsection:open_ended_enums}
+
+Gebruik \texttt{x-extensible-enum} voor enumeraties die waarschijnlijk uitgebreid zullen worden. Dit voorkomt compatibiliteitsproblemen. Gebruik enkel een gesloten \texttt{enum} als:
+
+\begin{itemize}
+    \item De API volledige controle heeft over de enum waarden.
+    \item De lijst met waarden compleet is en niet uitgebreid zal worden.
+\end{itemize}
+
+Voorbeeld van \texttt{x-extensible-enum}:
+
+\begin{minted}{yaml}
+status:
+  type: string
+  x-extensible-enum:
+    - PENDING
+    - CONFIRMED
+    - CANCELLED
+\end{minted}
+
+Clients moeten voorbereid zijn op nieuwe enum waarden en een fallback implementeren. De API moet de \texttt{x-extensible-enum} lijst updaten \textit{voordat} nieuwe waarden worden gebruikt. Vermijd het wijzigen van de semantiek van bestaande enum waarden.
+
+\section{REST - Deprecation}
+
+\subsection{De API moet deprecation in de specificatie weergeven}
+\label{subsection:deprecation_specificatie}
+
+Deprecation moet in de OpenAPI-specificatie worden aangegeven met \texttt{deprecated: true} voor het betreffende element (endpoint, parameter, schema, etc.). Voeg een duidelijke beschrijving toe met informatie over migratie en een sunset date (indien gepland).
+
+\subsection{De API moet goedkeuring van clients verkrijgen voor shutdown}
+\label{subsection:goedkeuring_clients}
+
+Voordat een API, API versie, of feature wordt uitgefaseerd, moet de API owner goedkeuring van alle clients verkrijgen voor de sunset date. De API owner moet clients helpen met migratie door een migratiehandleiding te voorzien.
+
+\subsection{De API moet toestemming van externe partners verzamelen}
+\label{subsection:toestemming_externe_partners}
+
+Het gebruik van deprecated API's die gepland zijn voor shutdown moet gemonitord worden om de migratievoortgang te volgen en ongewenste gevolgen te voorkomen. Zie ook sectie \ref{subsection:api_gebruik_monitoren}.
+
+\subsection{De API moet het gebruik van deprecated API's monitoren}
+\label{subsection:monitoring_deprecated_api}
+
+Het gebruik van deprecated API's die gepland zijn voor shutdown moet gemonitord worden om de migratievoortgang te volgen en ongewenste gevolgen te voorkomen. Zie ook sectie \ref{subsection:api_gebruik_monitoren}.
+
+\subsection{De API zou \texttt{Deprecation} en \texttt{Sunset} headers moeten toevoegen}
+\label{subsection:deprecation_sunset_headers}
+
+Tijdens de deprecation fase zou de API de \texttt{Deprecation} en \texttt{Sunset} headers (\autocite{rfc8594}) moeten toevoegen aan responses. De \texttt{Deprecation} header bevat een timestamp of \texttt{true} (als de feature al deprecated is). De \texttt{Sunset} header bevat de timestamp waarop de feature onbeschikbaar wordt. Gebruik de standaard header definities uit de guidelines. Het toevoegen van deze headers is \textit{niet} voldoende om client consent te verkrijgen.
+
+\subsection{Clients zouden monitoring voor \texttt{Deprecation} en \texttt{Sunset} headers moeten toevoegen}
+\label{subsection:client_monitoring_deprecation}
+
+Clients zouden de \texttt{Deprecation} en \texttt{Sunset} headers moeten monitoren en alerts configureren om tijdig te kunnen migreren.
+
+\subsection{Clients mogen geen deprecated API's gebruiken}
+\label{subsection:geen_gebruik_deprecated_apis}
+
+Clients mogen geen deprecated API's, versies, of features gebruiken.
+
+\section{REST - Operatie}
+
+\subsection{De API moet de OpenAPI-specificatie publiceren}
+\label{subsection:openapi_publiceren}
+
+Alle API's (behalve component-interne API's) moeten hun OpenAPI-specificatie publiceren. Ook voor interne API's wordt publicatie aanbevolen. Publicatie gebeurt door de OpenAPI-specificatie (als YAML bestand) toe te voegen aan de repository van de API. Dit zorgt ervoor dat de API documentatie centraal beschikbaar is voor alle ontwikkelaars.
+
+\subsection{De API zou het API gebruik moeten monitoren}
+\label{subsection:api_gebruik_monitoren}
+
+API owners zouden het API gebruik moeten monitoren om inzicht te krijgen in welke clients de API gebruiken. Dit is nuttig voor bijvoorbeeld het identificeren van partners voor API wijzigingen. Een goede manier om dit te implementeren is door de \texttt{client-id} uit de OAuth token te loggen.

@@ -1,0 +1,120 @@
+\chapter{Evaluatie}
+\label{ch:evaluatie}
+
+In dit hoofdstuk presenteren we de resultaten van de implementatie van de RESTful API principes en de OpenAPI-specificatie in de BrightEats-applicatie. We evalueren de impact van deze implementatie op de kwaliteit, consistentie en onderhoudbaarheid van de API, zowel vanuit het perspectief van de backend als de frontend. Om een grondige evaluatie uit te voeren, maken we gebruik van verschillende methoden, waaronder geautomatiseerde tests en een analyse van de ontwikkel- en onderhoudskosten. Aan de hand van deze resultaten zullen we de onderzoeksvragen beantwoorden en aanbevelingen formuleren voor toekomstige API-ontwikkelingen binnen BrightAnalytics.
+
+\section{Consistentie}
+
+Een consistente API is essentieel voor de bruikbaarheid en onderhoudbaarheid van de applicatie. In deze sectie evalueren we de consistentie van de API endpoints, de datastructuren, de foutafhandeling en de documentatie.
+
+\subsection{API endpoints}
+
+Alle API endpoints in de BrightEats-applicatie volgen de RESTful API principes. De endpoints zijn consistent benoemd en volgen de standaard conventies voor het gebruik van HTTP-methoden. De datastructuren van de request- en response bodies zijn uniform en voorspelbaar. De foutafhandeling is uniform en voorziet de gebruiker van voldoende informatie om de fout te identificeren en op te lossen. De documentatie is volledig en up-to-date en bevat alle informatie die nodig is om de API correct te gebruiken.
+
+\subsection{HTTP Response Codes}
+
+Een consistent gebruik van HTTP response codes is cruciaal voor een goede werking en begrijpelijkheid van de API. De BrightEats API maakt gebruik van een reeks standaard HTTP response codes om de uitkomst van een request aan te geven. Over het algemeen worden de response codes consistent en correct toegepast.
+
+\subsubsection{Succesvolle responses}
+
+\begin{itemize}
+  \item \textbf{200 OK:} Wordt gebruikt voor succesvolle GET, PUT, PATCH en DELETE requests. Bijvoorbeeld, wanneer een \texttt{GroupOrder} succesvol wordt opgehaald via \texttt{GET /group-orders/{groupOrder}}, wordt een 200 OK response met de \texttt{GroupOrder} data teruggestuurd.
+  \item \textbf{201 Created:} Wordt gebruikt wanneer een resource succesvol is aangemaakt. Bijvoorbeeld, wanneer een nieuwe \texttt{GroupOrder} wordt aangemaakt via \texttt{POST /shops/{shop}/group-orders}, wordt een 201 Created response teruggestuurd, inclusief een \texttt{Location} header die verwijst naar de nieuwe \texttt{GroupOrder}.
+  \item \textbf{204 No Content:} Wordt gebruikt wanneer een request succesvol is verwerkt, maar er geen content wordt teruggestuurd. Bijvoorbeeld, wanneer een \texttt{GroupOrder} succesvol wordt verwijderd via \texttt{DELETE /group-orders/{groupOrder}}, wordt een 204 No Content response teruggestuurd.
+\end{itemize}
+
+\subsubsection{Foutmeldingen}
+
+\begin{itemize}
+  \item \textbf{401 Unauthorized:} Wordt gebruikt wanneer de gebruiker niet geauthenticeerd is. Bijvoorbeeld, wanneer een niet-ingelogde gebruiker probeert om een lijst van \texttt{GroupOrders} op te halen, wordt een 401 Unauthorized response teruggestuurd.
+  \item \textbf{403 Forbidden:} Wordt gebruikt wanneer de gebruiker niet geautoriseerd is om de actie uit te voeren. Bijvoorbeeld, wanneer een gebruiker probeert om een \texttt{GroupOrder} te verwijderen die niet door hem is gecoördineerd, wordt een 403 Forbidden response teruggestuurd.
+  \item \textbf{404 Not Found:} Wordt gebruikt wanneer de opgevraagde resource niet bestaat. Bijvoorbeeld, wanneer een gebruiker probeert om een \texttt{GroupOrder} op te halen met een ID die niet bestaat, wordt een 404 Not Found response teruggestuurd.
+  \item \textbf{409 Conflict:} Wordt gebruikt wanneer de request een conflict veroorzaakt met de huidige staat van de resource. Bijvoorbeeld, wanneer een admin probeert om een item toe te voegen aan de catalogus van een shop, maar het item bestaat al, wordt een 409 Conflict response teruggestuurd.
+  \item \textbf{422 Unprocessable Entity:} Wordt gebruikt wanneer de request ongeldige data bevat. Bijvoorbeeld, wanneer bij het aanmaken van een \texttt{GroupOrder} de \texttt{order\_deadline} in het verleden ligt, wordt een 400 Bad Request response teruggestuurd met details over de validatiefout.
+\end{itemize}
+
+\subsubsection{Conclusie}
+
+Over het algemeen worden de HTTP response codes in de BrightEats API consistent en correct gebruikt. De codes geven duidelijk de uitkomst van een request aan en volgen de standaarden. Dit draagt bij aan de voorspelbaarheid en bruikbaarheid van de API. De responses zelf kunnen nog verbeterd worden. Zo kan een 400 response naast de algemene message ook specifieke errors per veld meegeven, en de 404 response een error code bevatten. Deze code is dan specifiek voor het falen van de authorisatie.
+
+\section{Onderhoudbaarheid}
+
+Een belangrijk aspect van een goed ontworpen API is de onderhoudbaarheid. Een onderhoudbare API is makkelijk aan te passen, uit te breiden en te debuggen. In deze sectie analyseren we de impact van de geïmplementeerde RESTful principes en de OpenAPI-specificatie op de onderhoudbaarheid van de BrightEats API, met een specifieke focus op de tijd besteed aan debugging.
+
+\subsection{Impact op Debugging Tijd}
+
+Door de implementatie van RESTful principes en de OpenAPI-specificatie is de tijd die besteed wordt aan debugging significant verminderd. Dit is te danken aan verschillende factoren:
+
+\begin{itemize}
+\item \textbf{Gestructureerde code:} De duidelijke structuur van de code, met een scheiding van concerns door het gebruik van controllers, services, models, policies, requests en resources, maakt het eenvoudiger om de oorzaak van bugs te vinden. De code is beter leesbaar en makkelijker te volgen, waardoor ontwikkelaars snel kunnen navigeren naar de relevante secties.
+\item \textbf{Consistente responses en foutafhandeling:} Het consistente gebruik van HTTP response codes en een uniforme structuur voor foutmeldingen maakt het makkelijker om problemen te identificeren en te diagnosticeren. Ontwikkelaars kunnen snel zien of een request succesvol was en, in geval van een fout, wat de oorzaak was.
+\item \textbf{Automatisch gegenereerde documentatie:} De OpenAPI-specificatie genereert automatisch een interactieve API documentatie. Deze documentatie is altijd up-to-date en bevat gedetailleerde informatie over alle endpoints, inclusief request parameters, response bodies en mogelijke statuscodes. Dit maakt het eenvoudiger voor ontwikkelaars om te begrijpen hoe de API werkt en hoe ze deze moeten gebruiken, wat leidt tot minder fouten en snellere debugging.
+\item \textbf{Voorspelbaarheid:} Dankzij de duidelijke structuur en de automatische docs kunnen we beter voorspellen wat de code zal doen en hoe de API zal reageren op verschillende requests. Dit helpt bij het voorkomen van bugs en maakt het makkelijker om bestaande bugs op te lossen.
+\item \textbf{Robuustheid}: Door in de API zo veel mogelijk inkomende data toch te verwerken, ook als deze niet volledig aan de verwachtingen voldoet, is de API robuuster geworden. De API probeert bijvoorbeeld null waarden of ontbrekende velden zo goed mogelijk te interpreteren, in plaats van direct een foutmelding te geven. Dit heeft geresulteerd in het oplossen van enkele obscure bugs in de frontend, zonder dat de frontend code aangepast hoefde te worden. Hoewel dit extra implementatietijd kostte, heeft het de algehele onderhoudbaarheid verbeterd doordat de API toleranter is geworden voor kleine fouten in de requests.
+\end{itemize}
+
+\subsection{Impact op Toevoegen van nieuwe features}
+
+De gestructureerde aanpak en het gebruik van duidelijke conventies maken het ook eenvoudiger om nieuwe features toe te voegen aan de API. Ontwikkelaars kunnen voortbouwen op de bestaande structuur en code, en de OpenAPI documentatie helpt hen om de impact van hun wijzigingen te begrijpen.
+
+\subsection{Conclusie}
+
+De implementatie van RESTful principes en de OpenAPI-specificatie heeft een positieve impact gehad op de onderhoudbaarheid van de BrightEats API. De tijd besteed aan debugging is significant verminderd door de verbeterde structuur, consistentie, documentatie en voorspelbaarheid. Het toevoegen van nieuwe features is eenvoudiger geworden door de gestructureerde aanpak en het gebruik van conventies. De extra implementatietijd die nodig was om de API robuuster te maken, heeft zich terugbetaald in een vermindering van debugging tijd en een verhoogde stabiliteit van de applicatie.
+
+\section{Kostenanalyse: OpenAPI-specificatie}
+
+De implementatie van de OpenAPI-specificatie was een tijdsintensieve, maar waardevolle investering in de ontwikkeling van de BrightEats API. In deze sectie analyseren we de kosten en baten van deze implementatie.
+
+\subsection{Initiële Implementatiekosten}
+
+Het toevoegen van de OpenAPI-specificatie bracht aanzienlijke initiële kosten met zich mee. De belangrijkste kostenpost was de tijd die nodig was om PHPDoc comments toe te voegen aan alle controllers, resources, requests en andere relevante klassen. Deze comments moesten gedetailleerde informatie bevatten over de datastructuren, parameters, en response types.
+
+Deze initiële implementatie vereiste een aanzienlijke tijdsinvestering, maar was noodzakelijk om de basis te leggen voor een goed gedocumenteerde en onderhoudbare API.
+
+\subsection{Voordelen op lange termijn}
+
+Ondanks de hoge initiële kosten heeft de OpenAPI-specificatie op lange termijn aanzienlijke voordelen opgeleverd:
+
+\begin{itemize}
+  \item \textbf{Automatisch gegenereerde documentatie:} De OpenAPI-specificatie genereert automatisch een interactieve API documentatie. Deze documentatie is altijd up-to-date en bevat gedetailleerde informatie over alle endpoints, inclusief request parameters, response bodies en mogelijke statuscodes.
+  \item \textbf{Verbeterde communicatie:} De OpenAPI documentatie dient als een centrale bron van waarheid voor zowel frontend- als backend-ontwikkelaars. Dit verbetert de communicatie tussen teams en vermindert misverstanden over de werking van de API.
+  \item \textbf{Eenvoudigere debugging:} Zoals eerder vermeld in de sectie over onderhoudbaarheid, vergemakkelijkt de OpenAPI documentatie het debuggen van de API door een duidelijk overzicht te bieden van de verwachte input en output van elk endpoint.
+  \item \textbf{Snellere onboarding van nieuwe developers:} Nieuwe developers kunnen sneller aan de slag met de API dankzij de uitgebreide en interactieve documentatie.
+\end{itemize}
+
+\subsection{Conclusie}
+
+De implementatie van de OpenAPI-specificatie was een tijdsintensieve, maar waardevolle investering. De initiële kosten voor het toevoegen van PHPDoc comments en het configureren van de tools worden ruimschoots gecompenseerd door de voordelen op lange termijn. De automatisch gegenereerde, interactieve documentatie verbetert de communicatie, vereenvoudigt debugging, versnelt de onboarding van nieuwe developers en opent de deur naar codegeneratie en validatie. De OpenAPI-specificatie is daarmee een cruciale factor in de kwaliteit, consistentie en onderhoudbaarheid van de BrightEats API.
+
+\section{Testen}
+
+Een cruciaal onderdeel van de ontwikkeling van de BrightEats API was het implementeren van een uitgebreide testsuite. Alle API endpoints zijn grondig getest om de correcte werking van de API te garanderen en te valideren dat de implementatie voldoet aan de specificaties.
+
+\subsection{Aanpak}
+
+Voor het testen van de API is gebruik gemaakt van Pest, een modern testing framework voor PHP. Voor elk endpoint zijn meerdere test cases geschreven die verschillende scenario's afdekken, waaronder:
+
+\begin{itemize}
+  \item \textbf{Succesvolle requests:} Testen die verifiëren dat de API correct reageert op geldige requests met de verwachte statuscode en response body.
+  \item \textbf{Foutieve requests:} Testen die verifiëren dat de API correct reageert op ongeldige requests, zoals requests met ontbrekende of foutieve parameters, met de juiste foutcodes en foutmeldingen.
+  \item \textbf{Authenticatie en autorisatie:} Testen die verifiëren dat de API correct omgaat met authenticatie en autorisatie, en dat ongeautoriseerde gebruikers geen toegang hebben tot beveiligde endpoints.
+  \item \textbf{Edge cases:} Testen die specifieke randgevallen afdekken, zoals het aanmaken van een \texttt{GroupOrder} met een \texttt{order\_deadline} die ver in de toekomst ligt of het bijwerken van een \texttt{GroupOrder} met conflicterende data.
+\end{itemize}
+
+Deze test cases zijn geïmplementeerd als Pest testmethoden, waarbij gebruik wordt gemaakt van Laravel's ingebouwde testing features, zoals het simuleren van HTTP requests en het inspecteren van de response.
+
+\subsection{Voordelen}
+
+Het schrijven van deze uitgebreide testsuite was een aanzienlijke investering, maar heeft zijn vruchten afgeworpen:
+
+\begin{itemize}
+\item \textbf{Kwaliteitsborging:} De tests hebben ervoor gezorgd dat eventuele bugs in een vroeg stadium werden ontdekt en opgelost. Dit heeft geresulteerd in een stabielere en betrouwbaardere API.
+\item \textbf{Regressiepreventie:} Bij elke wijziging aan de API, hoe klein ook, worden alle tests automatisch uitgevoerd. Dit voorkomt regressie, waarbij bestaande functionaliteit onbedoeld kapot gaat door een wijziging.
+\item \textbf{Vertrouwen bij refactoring:} De testsuite gaf het development team het vertrouwen om de API te refactoren en te optimaliseren, wetende dat de tests zouden aanslaan als er iets mis zou gaan. De uitgebreide tests maakten het mogelijk om met vertrouwen wijzigingen door te voeren. Dit bleek van onschatbare waarde tijdens het refactoren van de API. Zonder de zekerheid van de tests was het veel riskanter geweest om wijzigingen aan te brengen, met als mogelijk gevolg een minder optimale en minder onderhoudbare code.
+\item \textbf{Levende documentatie:} De tests dienen ook als een vorm van levende documentatie, die laat zien hoe de API zich in verschillende situaties gedraagt.
+\end{itemize}
+
+\subsection{Conclusie}
+
+Het grondig testen van alle API endpoints was een cruciale stap in de ontwikkeling van de BrightEats API. De investering in het schrijven van de testsuite heeft zich ruimschoots terugverdiend in de vorm van een hogere kwaliteit, stabiliteit en onderhoudbaarheid van de API. De tests bieden een vangnet dat regressie voorkomt en het developmentteam in staat stelt om met vertrouwen te refactoren en de API verder te ontwikkelen.
+
