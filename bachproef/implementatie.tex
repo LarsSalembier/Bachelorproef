@@ -15,6 +15,20 @@ In dit hoofdstuk duiken we in de concrete implementatie van de BrightEats API, w
 
 BrightEats is een applicatie die toelaat om lunchbestellingen te plaatsen en te beheren voor werknemers van BrightAnalytics. Gebruikers loggen in en zien vervolgens een lijst van winkels met openstaande groepsbestellingen. Vervolgens kunnen ze een bestelling plaatsen in een groepsbestelling, of zelf een groepsbestelling starten. De hoofdfunctionaliteit en het nut van de applicatie is dat de persoon die de groepsbestelling start, makkelijk betaalverzoeken kan sturen naar de deelnemers van de bestelling. De backend API moet dus in staat zijn om betalingsverzoeken te genereren in de vorm van QR-codes.
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{brighteats.png}
+    \caption{De homepage van de BrightEats applicatie.}
+    \label{fig:brighteats}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{brighteats-payment-page.png}
+    \caption{De betalingspagina van de BrightEats applicatie, met een QR-code voor de betaling.}
+    \label{fig:brighteats-shop}
+\end{figure}
+
 \bigskip
 
 Authenticatie gebeurt via Google SSO, waarbij gebruikers inloggen met hun BrightAnalytics Google account. De backend API is verantwoordelijk voor het beheren van gebruikers, winkels, menu's, groepsbestellingen en betalingsverzoeken. De frontend applicatie is verantwoordelijk voor het tonen van deze gegevens en het toelaten van interactie met de gebruiker.
