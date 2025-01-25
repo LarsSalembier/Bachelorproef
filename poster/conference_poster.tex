@@ -9,78 +9,70 @@
 % Info over de opleiding
 \course{Bachelorproef}
 \studyprogramme{toegepaste informatica}
-\academicyear{2022-2023}
+\academicyear{2024-2025}
 \institution{Hogeschool Gent, Valentin Vaerwyckweg 1, 9000 Gent}
 
 % Info over de bachelorproef
-\title{Titel van uw bachelorproef}
-\subtitle{Ondertitel (eventueel)}
-\author{Voornaam Naam}
-\email{voornaam.familienaam@student.hogent.be}
-\supervisor{Voornaam Naam}
-\cosupervisor{Voornaam Naam (Bedrijf)}
+\title{De praktische voordelen van RESTful API design in een Laravel-API}
+\subtitle{Een case study bij BrightAnalytics}
+\author{Lars Salembier}
+\email{lars.salembier@student.hogent.be}
+\supervisor{Irina Malfait}
+\cosupervisor{Lowie Tyvaert (BrightAnalytics)}
 
 % Indien ingevuld, wordt deze informatie toegevoegd aan het einde van de
 % abstract. Zet in commentaar als je dit niet wilt.
-\specialisation{Systeem- en Netwerkbeheer}
-\keywords{Lambda-calculus, Scheme}
-\projectrepo{https://github.com/user/repo}
+\specialisation{Web en Enterprise Development}
+\keywords{RESTful API, OpenAPI, Laravel, API Design}
+\projectrepo{https://github.com/larssalembier/bachelorproef}
 
 \begin{document}
 
 \maketitle
 
 \begin{abstract}
-It's only a model.
-You don't vote for kings. Who's that then? We found them. Ni! Ni! Ni! Ni!
-The nose? On second thoughts, let's not go there. It is a silly place. Bloody Peasant! And the hat. She's a witch! Where'd you get the coconuts?
+In de hedendaagse, sterk verbonden digitale wereld zijn Application Programming Interfaces (API's) de onmisbare bouwstenen voor interactie tussen applicaties en systemen. Voor BrightAnalytics, een bedrijf dat een geavanceerd data-visualisatieplatform voor financiële rapportage en business intelligence maakt, is de kwaliteit, robuustheid en schaalbaarheid van hun API's van cruciaal belang voor het succes van hun product. Deze bachelorproef duikt diep in de wereld van RESTful API design, inclusief de principes van HATEOAS (Hypermedia as the Engine of Application State) en OpenAPI, om te onderzoeken hoe deze concepten kunnen bijdragen aan de optimalisatie van API-ontwikkeling binnen BrightAnalytics, met specifieke focus op hoe we deze principes kunnen toepassen bij de ontwikkeling van een API met Laravel. De centrale onderzoeksvraag is: ``Welke concrete voordelen biedt de implementatie van RESTful API design, en in het bijzonder HATEOAS en OpenAPI, voor de kwaliteit, consistentie en onderhoudbaarheid van een Laravel-API en een bijbehorende frontend applicatie?''. Door middel van een grondige literatuurstudie en een praktische case study, de ontwikkeling van de BrightEats API – een intern platform voor lunchbestellingen – worden deze principes geëvalueerd op hun impact op backend- en frontend-ontwikkeling, ontwikkelingskosten, onderhoudbaarheid, en de algehele UX (user experience) en DX (developer experience).
 \end{abstract}
 
 \begin{multicols}{2} % This is how many columns your poster will be broken into, a portrait poster is generally split into 2 columns
 
-\section{Introductie}
+\section{Inleiding}
 
-Be quiet! Found them? In Mercia?! The coconut's tropical! But you are dressed as one… Well, what do you want? Knights of Ni, we are but simple travelers who seek the enchanter who lives beyond these woods.
+Deze bachelorproef onderzoekt hoe RESTful API design, HATEOAS en OpenAPI kunnen bijdragen aan het optimaliseren van API-ontwikkeling binnen BrightAnalytics, met specifieke aandacht voor de implementatie in Laravel. De BrightEats applicatie, een intern platform voor lunchbestellingen, dient als een concrete case study om de praktische implementatie en evaluatie van deze principes te illustreren.
 
-Well, what do you want? It's only a model. Camelot! We found them. We shall say `Ni' again to you, if you do not appease us.
+\section{Literatuurstudie: diepgaande analyse van REST, HATEOAS en OpenAPI}
 
-The nose? Shut up! Burn her! I am your king. You don't vote for kings.
+De literatuurstudie vormt de theoretische basis van dit onderzoek en omvat een diepgaande analyse van RESTful API design principes, HATEOAS en OpenAPI. REST, Representational State Transfer, beschrijft een API als een uniforme interface voor interactie met resources, die worden geïdentificeerd via URI's en gemanipuleerd via standaard HTTP-methoden (GET, POST, PUT, DELETE, PATCH). HATEOAS, Hypermedia as the Engine of Application State, introduceert het concept van hypermedialinks in API-responses, waardoor clients dynamisch kunnen navigeren door de API zonder voorafgaande kennis van de URI-structuur. OpenAPI, voorheen Swagger, biedt een gestandaardiseerde manier om API's te beschrijven en te documenteren, wat de samenwerking tussen ontwikkelaars en de integratie met andere systemen vergemakkelijkt.
 
-You can't expect to wield supreme power just `cause some watery tart threw a sword at you! Well, we did do the nose. I don't want to talk to you no more, you empty-headed animal food trough water! I fart in your general direction! Your mother was a hamster and your father smelt of elderberries! Now leave before I am forced to taunt you a second time!
+\section{Opgestelde RESTful API Guidelines}
 
-Why do you think that she is a witch? We want a shrubbery!! I don't want to talk to you no more, you empty-headed animal food trough water! I fart in your general direction! Your mother was a hamster and your father smelt of elderberries! Now leave before I am forced to taunt you a second time!
+Gebaseerd op de inzichten uit de literatuurstudie en de specifieke context van BrightAnalytics, werden concrete guidelines opgesteld voor de ontwikkeling van RESTful API's, gebaseerd op de Zalando RESTful API Guidelines. Deze guidelines behandelen diverse aspecten van API design, waaronder URI-structuur, HTTP-methoden, statuscodes, dataformaten, error handling, versiebeheer en authenticatie.
 
-\section{Experimenten}
+\section{Case Study: BrightEats API}
 
-A newt? Camelot! Why? No, no, no! Yes, yes. A bit. But she's got a wart.
+De BrightEats API, een intern platform ontwikkeld voor het beheren van lunchbestellingen binnen BrightAnalytics, diende als een praktische case study voor dit onderzoek. De API biedt functionaliteit voor het beheren van gebruikers, winkels, menu's, groepsbestellingen en betalingen, inclusief de generatie van QR-codes voor mobiele betalingen. De implementatie van de API volgde een iteratieve aanpak, waarbij stapsgewijs functionaliteit werd toegevoegd en verfijnd op basis van de opgestelde guidelines.
 
-Shut up! I dunno. Must be a king. Who's that then? Look, my liege! On second thoughts, let's not go there. It is a silly place.
+\section{Implementatie met Laravel}
 
-Shut up! Will you shut up?! No, no, no! Yes, yes. A bit. But she's got a wart. He hasn't got shit all over him. It's only a model. It's only a model.
+De backend van de BrightEats API werd ontwikkeld met alle guidelines in het achterhoofd. Resource controllers bieden een gestructureerde manier om CRUD-operaties (Create, Read, Update, Delete) op resources te implementeren. Policies worden gebruikt voor autorisatie, waardoor gecontroleerd kan worden welke gebruikers toegang hebben tot specifieke resources en acties. Request classes zorgen voor validatie van inkomende data, terwijl services, zoals de \texttt{OrderService} en \texttt{QrCodeGenerator}, de business logica encapsuleren. API Resources transformeren de data naar een formaat dat geschikt is voor consumptie door de frontend.
 
-Bring her forward! I don't want to talk to you no more, you empty-headed animal food trough water! I fart in your general direction! Your mother was a hamster and your father smelt of elderberries! Now leave 
+\section{OpenAPI}
 
-\section{Sectie met figuur}
-
-De {\LaTeX} figure-omgeving bepaalt zelf waar een afbeelding komt en dat is meestal niet op de plek in de tekst waar de figure-omgeving gedefinieerd wordt. Als je wilt forceren dat afbeeldingen toch in de flow van de tekst blijven, dan kan je dat zoals hieronder:
+De OpenAPI-specificatie speelt een cruciale rol in de documentatie en standaardisatie van de BrightEats API. De specificatie wordt gegenereerd met behulp van de \texttt{dedoc/scramble}-package, die PHPDoc comments in de code gebruikt om een OpenAPI-document te creëren. Deze automatisch gegenereerde documentatie dient als een centrale bron van waarheid voor alle ontwikkelaars die met de API werken, zowel frontend als backend. De interactieve documentatie, automatisch gegenereerd vanuit de OpenAPI-specificatie, vergemakkelijkt de samenwerking tussen teams en versnelt het onboarding proces voor nieuwe ontwikkelaars.
 
 \begin{center}
   \captionsetup{type=figure}
-  \includegraphics[width=1.0\linewidth]{grail}
-  \captionof{figure}{He hasn't got shit all over him. The nose? Where'd you get the coconuts? What do you mean? We shall say `Ni' again to you, if you do not appease us}
+  \includegraphics[width=1.0\linewidth]{./graphics/scramble.png}
+  \captionof{figure}{Gegenereerde OpenAPI-documentatie met \texttt{dedoc/scramble}}
 \end{center}
 
-Let er wel op dat dit tot problemen met bladschikking kan leiden.
+\section{Resultaten}
 
-\section{Conclusies}
+De implementatie van RESTful API design principes, in combinatie met de OpenAPI-specificatie, heeft geleid tot significante verbeteringen in de kwaliteit, consistentie en onderhoudbaarheid van de BrightEats API. De gestructureerde code, de uitgebreide documentatie en de geautomatiseerde tests hebben de tijd die nodig is voor debugging aanzienlijk verminderd en het toevoegen van nieuwe features vereenvoudigd. De keuze om HATEOAS niet te implementeren bleek gerechtvaardigd, aangezien de complexiteit en overhead niet opwogen tegen de beperkte meerwaarde in de context van dit project. Aangezien we automatisch gegenereerde documentatie hebben, is HATEOAS niet nodig om de API te ontdekken. Overigens is het gebruik van HATEOAS in een dedicated frontend applicatie vaak omslachtig. HATEOAS kan wel nuttig zijn als een API publiek beschikbaar is of als er meerdere clients zijn die de API gebruiken. Dit is echter meestal niet het geval bij BrightAnalytics.
 
-Don't underestimate the Force. Oh God, my uncle. How am I ever gonna explain this? I suggest you try it again, Luke. This time, let go your conscious self and act on instinct. Don't be too proud of this technological terror you've constructed. The ability to destroy a planet is insignificant next to the power of the Force.
+\section{Conclusie}
 
-\section{Toekomstig onderzoek}
-
-I care. So, what do you think of her, Han? No! Alderaan is peaceful. We have no weapons. You can't possibly… I have traced the Rebel spies to her. Now she is my only link to finding their secret base.
-
-Kid, I've flown from one side of this galaxy to the other. I've seen a lot of strange stuff, but I've never seen anything to make me believe there's one all-powerful Force controlling everything. There's no mystical energy field that controls my destiny. It's all a lot of simple tricks and nonsense. You are a part of the Rebel Alliance and a traitor! Take her away! 
+De bevindingen van dit onderzoek tonen aan dat RESTful API design en OpenAPI-specificatie concrete voordelen bieden voor de ontwikkeling en het onderhoud van API's bij BrightAnalytics. De gestructureerde aanpak, het consistente gebruik van HTTP-methoden en -statuscodes, en de automatisch gegenereerde documentatie dragen bij aan een verhoogde kwaliteit, consistentie en onderhoudbaarheid van de API's. HATEOAS is niet altijd noodzakelijk en kan, zoals in het geval van de BrightEats API, leiden tot onnodige complexiteit. BrightAnalytics wordt geadviseerd om RESTful principes en OpenAPI te integreren als standaardonderdeel van hun API-ontwikkelingsproces. Verder onderzoek naar de mogelijkheden van automatische validatie met OpenAPI en het uitvoeren van performancetests wordt aanbevolen om de API's verder te optimaliseren. Toekomstig onderzoek zou zich ook kunnen richten op een langetermijnevaluatie van de impact van RESTful design en OpenAPI op de onderhoudskosten, een vergelijking met alternatieve API-stijlen zoals GraphQL, en een diepere analyse van API beveiliging.
 
 \end{multicols}
 \end{document}
