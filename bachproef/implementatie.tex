@@ -5,15 +5,15 @@
 \chapter{Implementatie}
 \label{ch:implementatie}
 
-Dit hoofdstuk beschrijft in detail de implementatie van RESTful principes en de aanpassingen in de frontend applicatie voor de BrightEats API. We behandelen codevoorbeelden, tools en de gemaakte keuzes.
+Dit hoofdstuk beschrijft in detail de implementatie van RESTful principes en de aanpassingen in de frontend applicatie voor de Bright\-Eats API. We behandelen codevoorbeelden, tools en de gemaakte keuzes.
 
 \section{Inleiding}
 
-In dit hoofdstuk duiken we in de concrete implementatie van de BrightEats API, waarbij we de theoretische principes uit de voorgaande hoofdstukken vertalen naar werkende code. We bouwen voort op de keuzes die gemaakt zijn in de literatuurstudie: de focus ligt op het implementeren van een robuuste RESTful API, ondersteund door een uitgebreide OpenAPI-specificatie, zonder de implementatie van HATEOAS. Verder zullen we, waar relevant, de Zalando RESTful API Guidelines als leidraad gebruiken. Dit hoofdstuk is opgedeeld in drie delen. Eerst behandelen we de implementatie van de backend in Laravel, gevolgd door de ontwikkeling van de frontend in Vue.js. Tenslotte tonen we hoe de OpenAPI-specificatie is geïntegreerd in het ontwikkelproces en hoe deze bijdraagt aan de documentatie, validatie en testing van de API.
+In dit hoofdstuk duiken we in de concrete implementatie van de Bright\-Eats API, waarbij we de theoretische principes uit de voorgaande hoofdstukken vertalen naar werkende code. We bouwen voort op de keuzes die gemaakt zijn in de literatuurstudie: de focus ligt op het implementeren van een robuuste RESTful API, ondersteund door een uitgebreide OpenAPI-specificatie, zonder de implementatie van HATEOAS. Verder zullen we, waar relevant, de Zalando RESTful API Guidelines als leidraad gebruiken. Dit hoofdstuk is opgedeeld in drie delen. Eerst behandelen we de implementatie van de backend in Laravel, gevolgd door de ontwikkeling van de frontend in Vue.js. Tenslotte tonen we hoe de OpenAPI-specificatie is geïntegreerd in het ontwikkelproces en hoe deze bijdraagt aan de documentatie, validatie en testing van de API.
 
 \section{BrightEats}
 
-BrightEats is een applicatie die toelaat om lunchbestellingen te plaatsen en te beheren voor werknemers van BrightAnalytics. Gebruikers loggen in en zien vervolgens een lijst van winkels met openstaande groepsbestellingen. Vervolgens kunnen ze een bestelling plaatsen in een groepsbestelling, of zelf een groepsbestelling starten. De hoofdfunctionaliteit en het nut van de applicatie is dat de persoon die de groepsbestelling start, makkelijk betaalverzoeken kan sturen naar de deelnemers van de bestelling. De backend API moet dus in staat zijn om betalingsverzoeken te genereren in de vorm van QR-codes.
+Bright\-Eats is een applicatie die toelaat om lunchbestellingen te plaatsen en te beheren voor werknemers van BrightAnalytics. Gebruikers loggen in en zien vervolgens een lijst van winkels met openstaande groepsbestellingen. Vervolgens kunnen ze een bestelling plaatsen in een groepsbestelling, of zelf een groepsbestelling starten. De hoofdfunctionaliteit en het nut van de applicatie is dat de persoon die de groepsbestelling start, makkelijk betaalverzoeken kan sturen naar de deelnemers van de bestelling. De backend API moet dus in staat zijn om betalingsverzoeken te genereren in de vorm van QR-codes.
 
 \begin{figure}[H]
     \centering
@@ -35,7 +35,7 @@ Authenticatie gebeurt via Google SSO, waarbij gebruikers inloggen met hun Bright
 
 \section{Backend - Algemene aanpak}
 
-De implementatie van de RESTful principes in de Laravel backend van de BrightEats API werd aangepakt met een iteratieve aanpak, waarbij we stapsgewijs verschillende onderdelen van de API ontwikkelden en verfijnden. Hierbij maakten we veel gebruik van Laravel's ingebouwde functionaliteiten, zoals resource controllers en routes, en hielden we ons zo veel mogelijk aan de opgestelde richtlijnen.
+De implementatie van de RESTful principes in de Laravel backend van de Bright\-Eats API werd aangepakt met een iteratieve aanpak, waarbij we stapsgewijs verschillende onderdelen van de API ontwikkelden en verfijnden. Hierbij maakten we veel gebruik van Laravel's ingebouwde functionaliteiten, zoals resource controllers en routes, en hielden we ons zo veel mogelijk aan de opgestelde richtlijnen.
 
 \subsection{Architectuur en RESTful principes}
 
@@ -51,7 +51,7 @@ Voor validatie gebruiken we specifieke request classes, zoals \texttt{StoreOrder
 
 \subsubsection{Authenticatie}
 
-Authenticatie wordt afgehandeld door Laravel Sanctum. Dit pakket biedt een eenvoudige manier om API tokens te beheren en gebruikers te authenticeren. Voor BrightEats is Google Single Sign-On (SSO) de enige authenticatiemethode. Gebruikers loggen in door een POST request te sturen naar \texttt{/users} met hun Google credential. Het systeem verifieert deze credential en genereert een Sanctum token voor de gebruiker.
+Authenticatie wordt afgehandeld door Laravel Sanctum. Dit pakket biedt een eenvoudige manier om API tokens te beheren en gebruikers te authenticeren. Voor Bright\-Eats is Google Single Sign-On (SSO) de enige authenticatiemethode. Gebruikers loggen in door een POST request te sturen naar \texttt{/users} met hun Google credential. Het systeem verifieert deze credential en genereert een Sanctum token voor de gebruiker.
 
 \subsubsection{Businesslogica}
 
@@ -63,7 +63,7 @@ Voor het terugsturen van data gebruiken we API Resources. Deze transformeren de 
 
 \section{Beschrijving van de API Routes}
 
-Het \texttt{api.php} bestand definieert alle routes voor de BrightEats API. Hieronder volgt een gedetailleerde beschrijving van elke route, gegroepeerd per resource en functionaliteit. Alle routes, met uitzondering van de inlog-route, vallen onder de \texttt{auth:sanctum} middleware, wat betekent dat gebruikers geauthenticeerd moeten zijn om toegang te krijgen.
+Het \texttt{api.php} bestand definieert alle routes voor de Bright\-Eats API. Hieronder volgt een gedetailleerde beschrijving van elke route, gegroepeerd per resource en functionaliteit. Alle routes, met uitzondering van de inlog-route, vallen onder de \texttt{auth:sanctum} middleware, wat betekent dat gebruikers geauthenticeerd moeten zijn om toegang te krijgen.
 
 \subsection{Authenticatie}
 
@@ -196,7 +196,7 @@ Route::prefix('/users')
 
 \section{Conclusie}
 
-De implementatie van de BrightEats API volgt een gestructureerde aanpak, waarbij Laravel's functionaliteiten optimaal worden benut om een RESTful architectuur te realiseren. Door gebruik te maken van resource controllers, routes, policies, request classes, response classes, models en service classes, is een robuuste en schaalbare API gecreëerd.
+De implementatie van de Bright\-Eats API volgt een gestructureerde aanpak, waarbij Laravel's functionaliteiten optimaal worden benut om een RESTful architectuur te realiseren. Door gebruik te maken van resource controllers, routes, policies, request classes, response classes, models en service classes, is een robuuste en schaalbare API gecreëerd.
 
 \section{Case study: \texttt{GroupOrder} Resource}
 
@@ -792,11 +792,11 @@ De autorisatie van acties wordt afgehandeld door policies. Policies definiëren 
 
 \subsection{Conclusie}
 
-De case study van de \texttt{GroupOrder} resource illustreert hoe de verschillende onderdelen van de BrightEats API samenwerken om een RESTful API te realiseren. De \texttt{GroupOrderController} handelt de HTTP requests af, de \texttt{GroupOrderService} bevat de business logica, het \texttt{GroupOrder} model vertegenwoordigt de data in de database, de API resources formatteren de responses, de request classes valideren de request data en de policies autoriseren de acties. Door deze onderdelen op een gestructureerde manier te implementeren, wordt een robuuste en schaalbare API gecreëerd.
+De case study van de \texttt{GroupOrder} resource illustreert hoe de verschillende onderdelen van de Bright\-Eats API samenwerken om een RESTful API te realiseren. De \texttt{GroupOrderController} handelt de HTTP requests af, de \texttt{GroupOrderService} bevat de business logica, het \texttt{GroupOrder} model vertegenwoordigt de data in de database, de API resources formatteren de responses, de request classes valideren de request data en de policies autoriseren de acties. Door deze onderdelen op een gestructureerde manier te implementeren, wordt een robuuste en schaalbare API gecreëerd.
 
 \section{Frontend - Algemene Aanpak}
 
-De Vue.js frontend van de BrightEats applicatie communiceert met de RESTful API via HTTP requests. Voor het uitvoeren van deze requests wordt gebruik gemaakt van de Axios library. Axios biedt een gebruiksvriendelijke interface voor het maken van HTTP requests en het verwerken van responses.
+De Vue.js frontend van de Bright\-Eats applicatie communiceert met de RESTful API via HTTP requests. Voor het uitvoeren van deze requests wordt gebruik gemaakt van de Axios library. Axios biedt een gebruiksvriendelijke interface voor het maken van HTTP requests en het verwerken van responses.
 
 \subsection{Axios Configuratie}
 
@@ -1088,7 +1088,7 @@ Een belangrijk deel van onze RESTfulness guidelines is het gebruik van de OpenAP
 
 \subsection{Problemen bij opzet}
 
-Het opzetten van de documentatie was zeer simpel: we installeerden de package en stelden het configuratiebestand \texttt{scramble.php} in. Vervolgens starten we onze developmentomgeving en kregen we een mooie OpenAPI-specificatie te zien. Echter, bij het genereren van de specificatie van de BrightEats API, liepen we tegen enkele problemen aan.
+Het opzetten van de documentatie was zeer simpel: we installeerden de package en stelden het configuratiebestand \texttt{scramble.php} in. Vervolgens starten we onze developmentomgeving en kregen we een mooie OpenAPI-specificatie te zien. Echter, bij het genereren van de specificatie van de Bright\-Eats API, liepen we tegen enkele problemen aan.
 
 \bigskip
 
@@ -1105,7 +1105,7 @@ Het resultaat mag er zijn: een draaiende documentatiewebsite met alle endpoints,
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{scramble.png}
-\caption{De OpenAPI documentatie van de BrightEats API}
+\caption{De OpenAPI documentatie van de Bright\-Eats API}
 \label{fig:openapi}
 \end{figure}
 
@@ -1115,16 +1115,16 @@ Het automatisch genereren van de OpenAPI-specificatie van een Laravel-API is een
 
 \section{Conclusie}
 
-In dit hoofdstuk hebben we de implementatie van een RESTful API en frontend voor de BrightEats applicatie besproken. We hebben de belangrijkste concepten en technieken behandeld die gebruikt zijn om een robuuste en schaalbare API te ontwikkelen. We hebben gekeken naar de structuur van de Laravel API, de Vue.js frontend, en hoe deze samenwerken om een volledige applicatie te vormen.
+In dit hoofdstuk hebben we de implementatie van een RESTful API en frontend voor de Bright\-Eats applicatie besproken. We hebben de belangrijkste concepten en technieken behandeld die gebruikt zijn om een robuuste en schaalbare API te ontwikkelen. We hebben de structuur van de Laravel API en de Vue.js frontend besproken, en ook besproken hoe deze samenwerken om een volledige applicatie te vormen.
 
 \bigskip
 
-We hebben de implementatie van de \texttt{GroupOrder} resource in de backend en frontend geanalyseerd, en de verschillende onderdelen van de API en frontend besproken. We hebben gekeken naar de controllers, services, modellen, API resources, requests, policies, Axios configuratie, API services, data types, en componenten die betrokken zijn bij het beheren van groepsbestellingen.
+We hebben de implementatie van de \texttt{GroupOrder} resource in de backend en frontend geanalyseerd, en de verschillende onderdelen van de API en frontend besproken. We de controllers, services, modellen, API resources, requests, policies, Axios configuratie, API services, data types, en componenten die betrokken zijn bij het beheren van groepsbestellingen besproken.
 
 \bigskip
 
-Tot slot hebben we gekeken naar het genereren van de OpenAPI-specificatie voor de API met behulp van de \texttt{dedoc/scramble} package. We hebben de uitdagingen en oplossingen besproken bij het documenteren van de API en het toevoegen van beschrijvingen, voorbeelden en authorisatieregels aan de documentatie.
+Tot slot hebben we het genereren van de OpenAPI-specificatie voor de API met behulp van de \texttt{dedoc/scramble} package besproken. We hebben de uitdagingen en oplossingen besproken bij het documenteren van de API en het toevoegen van beschrijvingen, voorbeelden en authorisatieregels aan de documentatie.
 
 \bigskip
 
-De implementatie van de BrightEats API en frontend illustreert hoe RESTful principes en best practices kunnen worden toegepast om een moderne en schaalbare applicatie te ontwikkelen. Door een duidelijke structuur en scheiding van verantwoordelijkheden te hanteren, wordt het onderhoud en de uitbreidbaarheid van de applicatie gegarandeerd. De documentatie van de API biedt een nuttige referentie voor het frontend team en andere ontwikkelaars die met de API willen integreren.
+De implementatie van de Bright\-Eats API en frontend illustreert hoe RESTful principes en best practices kunnen worden toegepast om een moderne en schaalbare applicatie te ontwikkelen. Door een duidelijke structuur en scheiding van verantwoordelijkheden te hanteren, wordt het onderhoud en de uitbreidbaarheid van de applicatie gegarandeerd. De documentatie van de API biedt een nuttige referentie voor het frontend team en andere ontwikkelaars die met de API willen integreren.

@@ -1,19 +1,19 @@
 \chapter{Evaluatie}
 \label{ch:evaluatie}
 
-In dit hoofdstuk presenteren we de resultaten van de implementatie van de RESTful API principes en de OpenAPI-specificatie in de BrightEats-applicatie. We evalueren de impact van deze implementatie op de kwaliteit, consistentie en onderhoudbaarheid van de API, zowel vanuit het perspectief van de backend als de frontend. Om een grondige evaluatie uit te voeren, maken we gebruik van verschillende methoden, waaronder geautomatiseerde tests en een analyse van de ontwikkel- en onderhoudskosten. Aan de hand van deze resultaten zullen we de onderzoeksvragen beantwoorden en aanbevelingen formuleren voor toekomstige API-ontwikkelingen binnen BrightAnalytics.
+In dit hoofdstuk presenteren we de resultaten van de implementatie van de RESTful API principes en de OpenAPI-specificatie in de Bright\-Eats-applicatie. We evalu\-eren de impact van deze implementatie op de kwaliteit, consistentie en onderhoudbaarheid van de API, zowel vanuit het perspectief van de backend als de frontend. Om een grondige evaluatie uit te voeren, maken we gebruik van verschillende methoden, waaronder geautomatiseerde tests en een analyse van de ontwikkel- en onderhoudskosten. Aan de hand van deze resultaten zullen we de onderzoeksvragen beantwoorden en aanbevelingen formuleren voor toekomstige API-ontwikkelingen binnen BrightAnalytics.
 
 \section{Consistentie}
 
-Een consistente API is essentieel voor de bruikbaarheid en onderhoudbaarheid van de applicatie. In deze sectie evalueren we de consistentie van de API endpoints, de datastructuren, de foutafhandeling en de documentatie.
+Een consistente API is essentieel voor de bruikbaarheid en onderhoudbaarheid van de applicatie. In deze sectie evalu\-eren we de consistentie van de API endpoints, de datastructuren, de foutafhandeling en de documentatie.
 
 \subsection{API endpoints}
 
-Alle API endpoints in de BrightEats-applicatie volgen de RESTful API principes. De endpoints zijn consistent benoemd en volgen de standaard conventies voor het gebruik van HTTP-methoden. De datastructuren van de request- en response bodies zijn uniform en voorspelbaar. De foutafhandeling is uniform en voorziet de gebruiker van voldoende informatie om de fout te identificeren en op te lossen. De documentatie is volledig en up-to-date en bevat alle informatie die nodig is om de API correct te gebruiken.
+Alle API endpoints in de Bright\-Eats-applicatie volgen de RESTful API principes. De endpoints zijn consistent benoemd en volgen de standaard conventies voor het gebruik van HTTP-methoden. De datastructuren van de request- en response bodies zijn uniform en voorspelbaar. De foutafhandeling is uniform en voorziet de gebruiker van voldoende informatie om de fout te identificeren en op te lossen. De documentatie is volledig en up-to-date en bevat alle informatie die nodig is om de API correct te gebruiken.
 
 \subsection{HTTP Response Codes}
 
-Een consistent gebruik van HTTP response codes is cruciaal voor een goede werking en begrijpelijkheid van de API. De BrightEats API maakt gebruik van een reeks standaard HTTP response codes om de uitkomst van een request aan te geven. Over het algemeen worden de response codes consistent en correct toegepast.
+Een consistent gebruik van HTTP response codes is cruciaal voor een goede werking en begrijpelijkheid van de API. De Bright\-Eats API maakt gebruik van een reeks standaard HTTP response codes om de uitkomst van een request aan te geven. Over het algemeen worden de response codes consistent en correct toegepast.
 
 \subsubsection{Succesvolle responses}
 
@@ -35,11 +35,11 @@ Een consistent gebruik van HTTP response codes is cruciaal voor een goede werkin
 
 \subsubsection{Conclusie}
 
-Over het algemeen worden de HTTP response codes in de BrightEats API consistent en correct gebruikt. De codes geven duidelijk de uitkomst van een request aan en volgen de standaarden. Dit draagt bij aan de voorspelbaarheid en bruikbaarheid van de API. De responses zelf kunnen nog verbeterd worden. Zo kan een 400 response naast de algemene message ook specifieke errors per veld meegeven, en de 404 response een error code bevatten. Deze code is dan specifiek voor het falen van de authorisatie.
+Over het algemeen worden de HTTP response codes in de Bright\-Eats API consistent en correct gebruikt. De codes geven duidelijk de uitkomst van een request aan en volgen de standaarden. Dit draagt bij aan de voorspelbaarheid en bruikbaarheid van de API. De responses zelf kunnen nog verbeterd worden. Zo kan een 400 response naast de algemene message ook specifieke errors per veld meegeven, en de 404 response een error code bevatten. Deze code is dan specifiek voor het falen van de authorisatie.
 
 \section{Onderhoudbaarheid}
 
-Een belangrijk aspect van een goed ontworpen API is de onderhoudbaarheid. Een onderhoudbare API is makkelijk aan te passen, uit te breiden en te debuggen. In deze sectie analyseren we de impact van de geïmplementeerde RESTful principes en de OpenAPI-specificatie op de onderhoudbaarheid van de BrightEats API, met een specifieke focus op de tijd besteed aan debugging.
+Een belangrijk aspect van een goed ontworpen API is de onderhoudbaarheid. Een onderhoudbare API is makkelijk aan te passen, uit te breiden en te debuggen. In deze sectie analyseren we de impact van de geïmplementeerde RESTful principes en de OpenAPI-specificatie op de onderhoudbaarheid van de Bright\-Eats API, met een specifieke focus op de tijd besteed aan debugging.
 
 \subsection{Impact op Debugging Tijd}
 
@@ -59,11 +59,11 @@ De gestructureerde aanpak en het gebruik van duidelijke conventies maken het ook
 
 \subsection{Conclusie}
 
-De implementatie van RESTful principes en de OpenAPI-specificatie heeft een positieve impact gehad op de onderhoudbaarheid van de BrightEats API. De tijd besteed aan debugging is significant verminderd door de verbeterde structuur, consistentie, documentatie en voorspelbaarheid. Het toevoegen van nieuwe features is eenvoudiger geworden door de gestructureerde aanpak en het gebruik van conventies. De extra implementatietijd die nodig was om de API robuuster te maken, heeft zich terugbetaald in een vermindering van debugging tijd en een verhoogde stabiliteit van de applicatie.
+De implementatie van RESTful principes en de OpenAPI-specificatie heeft een positieve impact gehad op de onderhoudbaarheid van de Bright\-Eats API. De tijd besteed aan debugging is significant verminderd door de verbeterde structuur, consistentie, documentatie en voorspelbaarheid. Het toevoegen van nieuwe features is eenvoudiger geworden door de gestructureerde aanpak en het gebruik van conventies. De extra implementatietijd die nodig was om de API robuuster te maken, heeft zich terugbetaald in een vermindering van debugging tijd en een verhoogde stabiliteit van de applicatie.
 
 \section{Kostenanalyse: OpenAPI-specificatie}
 
-De implementatie van de OpenAPI-specificatie was een tijdsintensieve, maar waardevolle investering in de ontwikkeling van de BrightEats API. In deze sectie analyseren we de kosten en baten van deze implementatie.
+De implementatie van de OpenAPI-specificatie was een tijdsintensieve, maar waardevolle investering in de ontwikkeling van de Bright\-Eats API. In deze sectie analyseren we de kosten en baten van deze implementatie.
 
 \subsection{Initiële Implementatiekosten}
 
@@ -84,11 +84,11 @@ Ondanks de hoge initiële kosten heeft de OpenAPI-specificatie op lange termijn 
 
 \subsection{Conclusie}
 
-De implementatie van de OpenAPI-specificatie was een tijdsintensieve, maar waardevolle investering. De initiële kosten voor het toevoegen van PHPDoc comments en het configureren van de tools worden ruimschoots gecompenseerd door de voordelen op lange termijn. De automatisch gegenereerde, interactieve documentatie verbetert de communicatie, vereenvoudigt debugging, versnelt de onboarding van nieuwe developers en opent de deur naar codegeneratie en validatie. De OpenAPI-specificatie is daarmee een cruciale factor in de kwaliteit, consistentie en onderhoudbaarheid van de BrightEats API.
+De implementatie van de OpenAPI-specificatie was een tijdsintensieve, maar waardevolle investering. De initiële kosten voor het toevoegen van PHPDoc comments en het configureren van de tools worden ruimschoots gecompenseerd door de voordelen op lange termijn. De automatisch gegenereerde, interactieve documentatie verbetert de communicatie, vereenvoudigt debugging, versnelt de onboarding van nieuwe developers en opent de deur naar codegeneratie en validatie. De OpenAPI-specificatie is daarmee een cruciale factor in de kwaliteit, consistentie en onderhoudbaarheid van de Bright\-Eats API.
 
 \section{Testen}
 
-Een cruciaal onderdeel van de ontwikkeling van de BrightEats API was het implementeren van een uitgebreide testsuite. Alle API endpoints zijn grondig getest om de correcte werking van de API te garanderen en te valideren dat de implementatie voldoet aan de specificaties.
+Een cruciaal onderdeel van de ontwikkeling van de Bright\-Eats API was het implementeren van een uitgebreide testsuite. Alle API endpoints zijn grondig getest om de correcte werking van de API te garanderen en te valideren dat de implementatie voldoet aan de specificaties.
 
 \subsection{Aanpak}
 
@@ -116,5 +116,5 @@ Het schrijven van deze uitgebreide testsuite was een aanzienlijke investering, m
 
 \subsection{Conclusie}
 
-Het grondig testen van alle API endpoints was een cruciale stap in de ontwikkeling van de BrightEats API. De investering in het schrijven van de testsuite heeft zich ruimschoots terugverdiend in de vorm van een hogere kwaliteit, stabiliteit en onderhoudbaarheid van de API. De tests bieden een vangnet dat regressie voorkomt en het developmentteam in staat stelt om met vertrouwen te refactoren en de API verder te ontwikkelen.
+Het grondig testen van alle API endpoints was een cruciale stap in de ontwikkeling van de Bright\-Eats API. De investering in het schrijven van de testsuite heeft zich ruimschoots terugverdiend in de vorm van een hogere kwaliteit, stabiliteit en onderhoudbaarheid van de API. De tests bieden een vangnet dat regressie voorkomt en het developmentteam in staat stelt om met vertrouwen te refactoren en de API verder te ontwikkelen.
 
